@@ -7,10 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import com.head_first.aashi.uml_2_java.R;
+
+import utils.AccessModifier;
+import utils.ClassType;
 
 
 /**
@@ -73,6 +78,9 @@ public class UmlLayout extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.uml_layout, container, false);
+        Spinner classType = (Spinner)rootView.findViewById(R.id.classType);
+        classType.setAdapter(new ArrayAdapter<ClassType>(rootView.getContext(),
+                android.R.layout.simple_list_item_1, ClassType.values()));
         Button addField = (Button)rootView.findViewById(R.id.addField);
         addField.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +88,10 @@ public class UmlLayout extends Fragment {
                 LinearLayout fields = (LinearLayout)rootView.findViewById(R.id.fields);
                 //need to add the field to the list and set an onChangeListener on the List
                 View field = getActivity().getLayoutInflater().inflate(R.layout.field_layout, null);
+                Spinner accessModifier = (Spinner)field.findViewById(R.id.fieldAccessModifier);
+
+                accessModifier.setAdapter(new ArrayAdapter<String>(rootView.getContext(),
+                        android.R.layout.simple_list_item_1, getAccessModifiers()));
                 fields.addView(field);
             }
         });
@@ -90,10 +102,22 @@ public class UmlLayout extends Fragment {
                 LinearLayout methods = (LinearLayout)rootView.findViewById(R.id.methods);
                 //need to add the field to the list and set an onChangeListener on the List
                 View method = getActivity().getLayoutInflater().inflate(R.layout.method_layout, null);
+                Spinner accessModifier = (Spinner)method.findViewById(R.id.methodAccessModifier);
+                accessModifier.setAdapter(new ArrayAdapter<String>(rootView.getContext(),
+                        android.R.layout.simple_list_item_1, getAccessModifiers()));
                 methods.addView(method);
             }
         });
         return rootView;
+    }
+
+    private final String[] getAccessModifiers(){
+        String[] symbols = new String[AccessModifier.values().length];
+        int i = 0;
+        for(AccessModifier symbol : AccessModifier.values()){
+            symbols[i++] = (symbol.getSymbol());
+        }
+        return symbols;
     }
 
 //    // TODO: Rename method, update argument and hook method into UI event

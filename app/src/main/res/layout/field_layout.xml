@@ -10,9 +10,9 @@
         android:id="@+id/Fields">
 
         <Spinner
-            android:layout_width="20dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/accessModifier"
+            android:id="@+id/fieldAccessModifier"
             android:padding="5dp" />
 
         <EditText
