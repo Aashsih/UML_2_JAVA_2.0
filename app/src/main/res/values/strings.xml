@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">UML_2_Java</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="title_activity_project_viewer">Project Viewer</string>
+
+    <!-- UML layout-->
+    <string name="className">Class name</string>>
+    <string name="classType">Class</string>>
+    <string name="addField">Add Field</string>
+    <string name="addMethod">Add Method</string>
+    <string name="saveClass">Save</string>
+    <string name="cancel">Cancel</string>
+    <!-- Field layout-->
+    <string name="dataType">data type</string>>
+    <string name="varName">variable name</string>>
+
+    <!-- Method layout-->
+    <string name="returnType">return type</string>>
+    <string name="methodName">method name</string>>
+    <string name="parameters">parameters</string>
+
+    <!-- Common for methods and fields -->
+    <string name="accessModifier"> </string>
+    <string name="isFinal">final</string>
+    <string name="isStatic">static</string>
+
+    <!-- Sliding menu -->
+    <string name="projectName">Project Name</string>
+    <string name="addClass">Add Class</string>
+    <string name="convertToJava">Convert To Java</string>
+    <string name="selectAll">Select All</string>
+    <string name="deselectAll">Deselect All</string>
+    <string name="viewClass">View</string>
+
+    <string name="title_activity_project_viewer_test">ProjectViewerTest</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

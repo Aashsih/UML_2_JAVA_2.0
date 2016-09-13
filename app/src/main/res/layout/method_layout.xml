@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <Spinner
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/methodAccessModifier"
+            android:padding="5dp"
+            android:layout_gravity="center_vertical" />
+
+        <HorizontalScrollView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:id="@+id/horizontalScrollView"
+            android:layout_gravity="center_vertical">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/methodName"
+                    android:id="@+id/methodName"
+
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="("
+                    android:id="@+id/openingBracket"
+                    android:layout_gravity="center_vertical"
+                    android:singleLine="false" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/parameters"
+                    android:id="@+id/parameters"
+                    android:layout_gravity="center_vertical"
+
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text=")"
+                    android:id="@+id/closingBracket"
+                    android:layout_gravity="center_vertical"
+                    android:singleLine="false" />
+
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=":"
+            android:id="@+id/separator"
+            android:layout_gravity="center_vertical"
+            android:padding="5dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="returnType"
+            android:id="@+id/returnType"
+            android:layout_gravity="center_vertical"
+            android:padding="5dp" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/isFinal"
+            android:id="@+id/isMethodFinal"
+            android:layout_gravity="center"
+            android:checked="false"
+            android:layout_weight="1" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/isStatic"
+            android:id="@+id/isMethodStatic"
+            android:layout_gravity="center"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</LinearLayout>
