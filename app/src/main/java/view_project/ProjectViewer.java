@@ -1,5 +1,6 @@
 package view_project;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import android.support.v4.app.FragmentTransaction;
@@ -82,6 +83,7 @@ public class ProjectViewer extends AppCompatActivity {
                 aTransaction.addToBackStack(null);
                 aTransaction.commit();
                 drawerLayout.closeDrawers();
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             }
             default:
             {
@@ -109,5 +111,18 @@ public class ProjectViewer extends AppCompatActivity {
             drawerLayout.openDrawer(Gravity.LEFT);
         }
 
+    }
+    public void selectAll(View view){
+
+        for(CheckBox aClass : projectManager.getClassList()){
+            aClass.setChecked(true);
+        }
+    }
+
+    public void deselectAll(View view){
+
+        for(CheckBox aClass : projectManager.getClassList()){
+            aClass.setChecked(false);
+        }
     }
 }

@@ -62,7 +62,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/selectAll"
                     android:id="@+id/selectAll"
-                    android:layout_weight="0.5" />
+                    android:layout_weight="0.5"
+                    android:onClick="selectAll" />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -70,7 +71,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/deselectAll"
                     android:id="@+id/deselectAll"
-                    android:layout_weight="0.5" />
+                    android:layout_weight="0.5"
+                    android:onClick="deselectAll" />
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
