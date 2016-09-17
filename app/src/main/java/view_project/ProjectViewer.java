@@ -46,8 +46,10 @@ public class ProjectViewer extends AppCompatActivity {
         LinearLayout classList = (LinearLayout) findViewById(R.id.classList);
         View aClass = getLayoutInflater().inflate(R.layout.classname,null);
         CheckBox aClassCheckBox = (CheckBox)aClass.findViewById(R.id.checkBox);
-        aClassCheckBox.setId(projectManager.getClassId());
-        aClassCheckBox.setText("Class" + (projectManager.getClassId() + 1));
+//        aClassCheckBox.setId(projectManager.getClassId());
+//        aClassCheckBox.setText("Class" + (projectManager.getClassId() + 1));
+        aClassCheckBox.setId(projectManager.getClassList().size());
+        aClassCheckBox.setText("Class" + (projectManager.getClassList().size() + 1));
         //Dont delete or uncomment the following code before discussing with Aashish
 //        aClassCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override

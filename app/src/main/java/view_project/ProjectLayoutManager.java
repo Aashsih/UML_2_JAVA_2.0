@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Aashish Indorewala on 27-Aug-16.
  */
 public class ProjectLayoutManager {
-    private static int CLASS_ID = 0;
+    //private static int CLASS_ID = 0;
     //Navigation VIew
     private List<CheckBox> classList = null;
     private List<UmlLayout> umlFragments = null;
@@ -26,7 +26,7 @@ public class ProjectLayoutManager {
     }
 
     public final void addCheckBox(CheckBox checkBox){
-        CLASS_ID++;
+        //CLASS_ID++;
         this.classList.add(checkBox);
         this.umlFragments.add(new UmlLayout());
 
@@ -36,9 +36,9 @@ public class ProjectLayoutManager {
         return classList;
     }
 
-    public final int getClassId(){
-        return CLASS_ID;
-    }
+//    public final int getClassId(){
+//        return CLASS_ID;
+//    }
 
     public final UmlLayout getUmlFragment(int position){
         return this.umlFragments.get(position);

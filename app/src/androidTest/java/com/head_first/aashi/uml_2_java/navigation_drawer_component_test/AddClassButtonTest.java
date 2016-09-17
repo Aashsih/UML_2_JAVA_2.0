@@ -18,7 +18,12 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static junit.framework.Assert.assertEquals;
+import static org.hamcrest.Matchers.is;
 
 import com.head_first.aashi.uml_2_java.R;
 
@@ -29,6 +34,7 @@ import view_project.ProjectViewer;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
@@ -48,17 +54,38 @@ public class AddClassButtonTest {
     }
 
     @Test
-    public void isClassAddedOnClick() {
+    public void isAddButtonEnabled(){
+        assertTrue(((Button)mActivityRule.getActivity().findViewById(R.id.addClass)).isEnabled());
+    }
+    @Test
+    public void isClassAddedToUIOnClick() {
         // Type text and then press the button.
 //        onView(withId(R.id.addClass))
 //                .perform(typeText(mStringToBetyped), closeSoftKeyboard());
         // Check that the text was changed.
 //        onView(withId(R.id.textToBeChanged))
 //                .check(matches(withText(mStringToBetyped)));
-
+        ProjectViewer projectViewTester = mActivityRule.getActivity();
+        ProjectLayoutManager projectLayoutManager = projectViewTester.getProjectManager();
+        int currentCheckBox = projectLayoutManager.getClassList().size();
         onView(ViewMatchers.withId(R.id.addClass)).perform(click());
+        onView(ViewMatchers.withId(currentCheckBox)).perform(click());
+        assertTrue(ViewMatchers.isChecked().matches(projectLayoutManager.getClassList().get(currentCheckBox)));
 
     }
+    @Test
+    public void isCheckBoxTextCorrect(){
+        ProjectViewer projectViewTester = mActivityRule.getActivity();
+        ProjectLayoutManager projectLayoutManager = projectViewTester.getProjectManager();
+        int currentCheckBox = projectLayoutManager.getClassList().size();
+        onView(ViewMatchers.withId(R.id.addClass)).perform(click());
+        assertEquals("Class" + (currentCheckBox + 1),projectLayoutManager.getClassList().get(currentCheckBox).getText() );
+
+    }
+    /*
+    this method checks if the class is added to the List<CheckBox> defined in the ProjectLayuotManager class
+    and not to the UI
+     */
     @Test
     public void isClassAddedToTheList(){
         ProjectViewer projectViewTester = mActivityRule.getActivity();
@@ -68,7 +95,7 @@ public class AddClassButtonTest {
         assertThat(projectLayoutManager.getClassList().size(),this.withListSize(count+1));
      //   onView (withId (android.R.id.list)).check (ViewAssertions.matches (this.withListSize(count+1)));
     }
-    public static Matcher<Integer> withListSize (final int size) {
+    private static Matcher<Integer> withListSize (final int size) {
         return new TypeSafeMatcher<Integer>() {
 
             @Override
