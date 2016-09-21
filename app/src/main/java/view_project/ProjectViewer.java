@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -32,6 +33,8 @@ public class ProjectViewer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.project_view);
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         DrawerLayout slidingMenu = (DrawerLayout)findViewById(R.id.drawerLayout);
         slidingMenu.openDrawer(Gravity.LEFT);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
