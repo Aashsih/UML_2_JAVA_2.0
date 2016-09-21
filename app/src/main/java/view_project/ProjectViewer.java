@@ -85,7 +85,7 @@ public class ProjectViewer extends AppCompatActivity {
                 aTransaction.addToBackStack(null);
                 aTransaction.commit();
                 drawerLayout.closeDrawers();
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             }
             default:
             {

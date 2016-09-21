@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/customborder">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
+        android:layout_height="match_parent">
 
         <Spinner
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/methodAccessModifier"
             android:padding="5dp"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3" />
 
         <HorizontalScrollView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:id="@+id/horizontalScrollView"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3">
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -30,13 +31,12 @@
                 <EditText
 
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/methodName"
                     android:id="@+id/methodName"
 
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical" />
+                    android:gravity="center" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -49,11 +49,10 @@
 
                 <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/parameters"
                     android:id="@+id/parameters"
-                    android:layout_gravity="center_vertical"
 
                     android:gravity="center" />
 
@@ -73,22 +72,30 @@
         </HorizontalScrollView>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text=":"
             android:id="@+id/separator"
             android:layout_gravity="center_vertical"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:layout_weight="0.1" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="returnType"
             android:id="@+id/returnType"
             android:layout_gravity="center_vertical"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:layout_weight="0.45" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -106,7 +113,6 @@
             android:id="@+id/isMethodStatic"
             android:layout_gravity="center"
             android:layout_weight="1" />
-
     </LinearLayout>
 
 </LinearLayout>

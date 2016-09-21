@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import com.head_first.aashi.uml_2_java.R;
@@ -85,7 +86,7 @@ public class UmlLayout extends Fragment {
         addField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout fields = (LinearLayout)rootView.findViewById(R.id.fields);
+                LinearLayout fields = (LinearLayout) rootView.findViewById(R.id.fields);
                 //need to add the field to the list and set an onChangeListener on the List
                 View field = getActivity().getLayoutInflater().inflate(R.layout.field_layout, null);
                 Spinner accessModifier = (Spinner)field.findViewById(R.id.fieldAccessModifier);
@@ -99,7 +100,7 @@ public class UmlLayout extends Fragment {
         addMethod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout methods = (LinearLayout)rootView.findViewById(R.id.methods);
+                LinearLayout methods = (LinearLayout) rootView.findViewById(R.id.methods);
                 //need to add the field to the list and set an onChangeListener on the List
                 View method = getActivity().getLayoutInflater().inflate(R.layout.method_layout, null);
                 Spinner accessModifier = (Spinner)method.findViewById(R.id.methodAccessModifier);

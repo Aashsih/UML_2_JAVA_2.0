@@ -1,50 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/customborder">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/Fields">
+        android:layout_weight="0.5">
 
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/fieldAccessModifier"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:layout_weight="0.35"
+            android:layout_gravity="center_vertical" />
+        <HorizontalScrollView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.45"
+            android:layout_gravity="center_vertical">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="name"
-            android:id="@+id/varName"
-            android:layout_gravity="center_vertical"
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="name"
+                android:id="@+id/varName"
+                android:layout_gravity="center_vertical"
 
-            android:gravity="center"
-            android:padding="5dp" />
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_weight="0.45" />
 
-
+        </HorizontalScrollView>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text=":"
             android:id="@+id/textView"
             android:layout_gravity="center_vertical"
-            android:padding="5dp" />
-
-        <EditText
-            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:layout_weight="0.1" />
+        <HorizontalScrollView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="dataType"
-            android:id="@+id/dataType"
-            android:layout_gravity="center_vertical"
-            android:padding="5dp" />
+            android:layout_weight="0.45"
+            android:layout_gravity="center_vertical">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="dataType"
+                android:id="@+id/dataType"
+                android:layout_gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_weight="1" />
+
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5">
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -62,7 +87,6 @@
             android:id="@+id/isStatic"
             android:layout_gravity="center"
             android:layout_weight="1" />
-
     </LinearLayout>
 
 </LinearLayout>
