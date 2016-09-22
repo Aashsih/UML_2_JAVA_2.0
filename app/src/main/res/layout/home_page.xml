@@ -27,5 +27,8 @@
         android:layout_height="wrap_content"
         android:text="Open Project"
         android:id="@+id/openProject"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:onClick="onOpenProject"
+        android:nestedScrollingEnabled="false"
+        android:clickable="true" />
 </LinearLayout>
