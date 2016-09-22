@@ -15,9 +15,8 @@
         android:fillViewport="false">
 
 
-
     </FrameLayout>
-    
+
     
     <!-- Sliding Panel Content-->
     <!-- The width of the sliding panel should be specified in dp-->
