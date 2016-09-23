@@ -15,12 +15,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.head_first.aashi.uml_2_java.R;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class ProjectViewer extends AppCompatActivity {
@@ -128,6 +132,32 @@ public class ProjectViewer extends AppCompatActivity {
 
         for(CheckBox aClass : projectManager.getClassList()){
             aClass.setChecked(false);
+        }
+    }
+    public void onSaveProject(View v){
+
+        if(v.getId()==R.id.saveProject){
+            EditText projectName = (EditText)findViewById(R.id.projectName);
+            //Update the project name from the Project Name Text Field
+            this.projectManager.getProject().setProjectName(projectName.getText().toString());
+
+            try {
+                FileOutputStream fileOut = openFileOutput(this.projectManager.getProject().getProjectName(),MODE_PRIVATE);
+                fileOut.write(this.projectManager.getProject().toString().getBytes());  //Store the toString() of the project object.
+                Toast.makeText(getApplicationContext(),"Project Saved", Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+//            Other Method
+//            SharedPreferences myPreferns = getPreferences(MODE_PRIVATE);
+//
+//            Editor prefsEditor = myPreferns.edit();
+//            Gson gson = new Gson();
+//            String json = gson.toJson(myObject); // myObject
+//            prefsEditor.putString("MyObject", json);
+//            prefsEditor.commit();
+
         }
     }
 }

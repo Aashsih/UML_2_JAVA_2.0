@@ -30,8 +30,10 @@ public class UMLDiagram extends AppCompatActivity {
 //            }
 //        });
         //Aashish: testing the R.layout.project_view
-        Intent test = new Intent(this, ProjectViewer.class);
+        //Intent test = new Intent(this, ProjectViewer.class);
+        Intent test = new Intent(this, ProjectHome.class);
         startActivity(test);
+
         //testing ends here, The above code can be deleted
 
     }

@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import project.IProject;
 import project.Project;
 
 /**
@@ -20,7 +21,7 @@ import project.Project;
  * Created by moses on 18/09/2016.
  */
 public class ProjectPage extends Activity {
-    private Project p;
+    private IProject p;
     private EditText projectName;
 
     @Override

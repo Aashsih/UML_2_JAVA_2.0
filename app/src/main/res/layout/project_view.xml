@@ -126,10 +126,20 @@
                 android:onClick="addClass" />
 
             <Button
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/saveProject"
+                android:id="@+id/saveProject"
+                android:clickable="true"
+                android:onClick="onSaveProject" />
+
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/convertToJava"
                 android:id="@+id/convertTOJava" />
+
         </LinearLayout>
 
     </LinearLayout>

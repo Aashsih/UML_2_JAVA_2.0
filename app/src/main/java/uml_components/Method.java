@@ -1,6 +1,5 @@
 package uml_components;
 import java.io.Serializable;
-import java.util.List;
 /**
  * Created by Aashish Indorewala on 27-Aug-16.
  */
@@ -20,7 +19,7 @@ public class Method implements Serializable, IMethod{
 	
 	public Method(AccessModifier access, boolean isStatic, boolean isFinal, String returnType, String methodName,
 			String parameters) {
-		this.setAccess(access);
+		this.setAccessModifer(access);
 		this.setStatic(isStatic);
 		this.setFinal(isFinal);
 		this.setReturnType(returnType);
@@ -34,7 +33,7 @@ public class Method implements Serializable, IMethod{
 	}
 
 	@Override
-	public final void setAccess(AccessModifier access) {
+	public final void setAccessModifer(AccessModifier access) {
 		this.access = access;
 	}
 
@@ -59,7 +58,7 @@ public class Method implements Serializable, IMethod{
 		this.parameters = parameters;
 	}
 	@Override
-	public final AccessModifier getAccess() {
+	public final AccessModifier getAccessModifier() {
 		return access;
 	}
 	@Override

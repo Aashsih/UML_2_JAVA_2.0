@@ -12,17 +12,25 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import project.IProject;
+import project.Project;
+
 /**
  * Created by Aashish Indorewala on 27-Aug-16.
  */
 public class ProjectLayoutManager {
     //private static int CLASS_ID = 0;
     //Navigation VIew
+    private IProject project;
     private List<CheckBox> classList = null;
     private List<UmlLayout> umlFragments = null;
     public ProjectLayoutManager(){
+        project = new Project();
         classList = new ArrayList<>();
         umlFragments = new ArrayList<>();
+    }
+    public final IProject getProject(){
+        return project;
     }
 
     public final void addCheckBox(CheckBox checkBox){

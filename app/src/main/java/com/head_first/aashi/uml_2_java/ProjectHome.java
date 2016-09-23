@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import project.Project;
+import view_project.ProjectViewer;
 
 
 /**
@@ -29,7 +30,7 @@ public class ProjectHome extends AppCompatActivity {
    //Handle the Start Project Button
    protected void onStartProject(View v){
        if(v.getId()==R.id.startProject){
-           Intent projectNew = new Intent(this, ProjectPage.class);
+           Intent projectNew = new Intent(this, ProjectViewer.class);
            startActivity(projectNew);
        }
    }
