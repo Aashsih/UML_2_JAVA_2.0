@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="name"
+                android:text="@string/fieldName"
                 android:id="@+id/varName"
                 android:layout_gravity="center_vertical"
 
@@ -55,9 +55,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="dataType"
+                android:text="@string/dataType"
                 android:id="@+id/dataType"
                 android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:padding="5dp"
                 android:layout_weight="1" />
 

@@ -13,7 +13,7 @@
     <string name="cancel">Cancel</string>
     <!-- Field layout-->
     <string name="dataType">data type</string>>
-    <string name="varName">variable name</string>>
+    <string name="fieldName">variable name</string>>
 
     <!-- Method layout-->
     <string name="returnType">return type</string>>

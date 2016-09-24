@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/className"
-            android:id="@string/className"
+            android:id="@+id/className"
             android:background="#cecdcd"
             android:layout_gravity="center_horizontal" />
 

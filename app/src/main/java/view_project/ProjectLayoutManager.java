@@ -14,6 +14,7 @@ import java.util.List;
 
 import project.IProject;
 import project.Project;
+import uml_components.UML;
 
 /**
  * Created by Aashish Indorewala on 27-Aug-16.
@@ -36,6 +37,7 @@ public class ProjectLayoutManager {
     public final void addCheckBox(CheckBox checkBox){
         //CLASS_ID++;
         this.classList.add(checkBox);
+        this.project.getUmlList().add(new UML());
         this.umlFragments.add(new UmlLayout());
 
     }
@@ -49,6 +51,7 @@ public class ProjectLayoutManager {
 //    }
 
     public final UmlLayout getUmlFragment(int position){
+
         return this.umlFragments.get(position);
     }
 

@@ -3,15 +3,17 @@ package project;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import uml_components.IUML;
 import uml_components.UML;
 /**
  * Created by Aashish Indorewala on 27-Aug-16.
  */
 public class Project implements Serializable, IProject{
-	private List<UML> umlList;
+	private List<IUML> umlList;
 	private String projectName;
 
-	public Project(List<UML> umlList, String projectName) {
+	public Project(List<IUML> umlList, String projectName) {
 		this.umlList = umlList;
 		this.projectName = projectName;
 	}
@@ -22,11 +24,11 @@ public class Project implements Serializable, IProject{
 	}
 
 	@Override
-	public final List<UML> getUmlList() {
+	public final List<IUML> getUmlList() {
 		return umlList;
 	}
 	@Override
-	public final void setUmlList(List<UML> umlList) {
+	public final void setUmlList(List<IUML> umlList) {
 		this.umlList = umlList;
 	}
 

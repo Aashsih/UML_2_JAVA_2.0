@@ -80,16 +80,23 @@
             android:layout_gravity="center_vertical"
             android:padding="5dp"
             android:layout_weight="0.1" />
-
-        <EditText
+        <HorizontalScrollView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="returnType"
-            android:id="@+id/returnType"
+            android:id="@+id/horizontalScrollView2"
             android:layout_gravity="center_vertical"
-            android:padding="5dp"
-            android:layout_weight="0.45" />
+            android:layout_weight="0.3">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="returnType"
+                android:id="@+id/returnType"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_weight="0.45" />
+        </HorizontalScrollView>
     </LinearLayout>
 
     <LinearLayout

@@ -1,5 +1,6 @@
 package view_project;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
@@ -23,9 +24,18 @@ import android.widget.Toast;
 
 import com.head_first.aashi.uml_2_java.R;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.List;
+
+import project.IProject;
+import uml_components.IUML;
+import uml_to_java.ConvertToJava;
 
 public class ProjectViewer extends AppCompatActivity {
 
@@ -87,11 +97,21 @@ public class ProjectViewer extends AppCompatActivity {
             {
                 //when only one class needs to be viewed
                 FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
-                aTransaction.replace(R.id.frameLayout,
-                        projectManager.getUmlFragment(projectManager.getClassList().indexOf(selectedClasses.get(0))));
+                int indexOfClass = projectManager.getClassList().indexOf(selectedClasses.get(0));
+                UmlLayout umlLayout = projectManager.getUmlFragment(indexOfClass);
+
+
+                aTransaction.replace(R.id.frameLayout,umlLayout);
                 aTransaction.addToBackStack(null);
                 aTransaction.commit();
                 drawerLayout.closeDrawers();
+
+                umlLayout.setClassPositionInProject(indexOfClass);
+                if(projectManager.getProject().getUmlList().size() > indexOfClass){
+                    umlLayout.setUML(projectManager.getProject().getUmlList().get(indexOfClass));
+
+                }
+                //drawerLayout.closeDrawers();
                 //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             }
             default:
@@ -137,17 +157,18 @@ public class ProjectViewer extends AppCompatActivity {
     public void onSaveProject(View v){
 
         if(v.getId()==R.id.saveProject){
-            EditText projectName = (EditText)findViewById(R.id.projectName);
-            //Update the project name from the Project Name Text Field
-            this.projectManager.getProject().setProjectName(projectName.getText().toString());
-
+            IProject currentProject = this.projectManager.getProject();
+            currentProject.setProjectName(((EditText)findViewById(R.id.projectName)).toString());
             try {
-                FileOutputStream fileOut = openFileOutput(this.projectManager.getProject().getProjectName(),MODE_PRIVATE);
-                fileOut.write(this.projectManager.getProject().toString().getBytes());  //Store the toString() of the project object.
-                Toast.makeText(getApplicationContext(),"Project Saved", Toast.LENGTH_LONG).show();
-            } catch (IOException e) {
+                FileOutputStream fileOutputStream = openFileOutput(currentProject.getProjectName() + ".ser", Context.MODE_PRIVATE);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                objectOutputStream.writeObject(currentProject);
+                objectOutputStream.close();
+                fileOutputStream.close();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+
 
 //            Other Method
 //            SharedPreferences myPreferns = getPreferences(MODE_PRIVATE);
@@ -159,5 +180,23 @@ public class ProjectViewer extends AppCompatActivity {
 //            prefsEditor.commit();
 
         }
+    }
+
+    public void convertToJava(View v){
+        ConvertToJava javaCode = new ConvertToJava(this.projectManager.getProject());
+        List<StringBuilder> projectCode = javaCode.getJavaCode();
+        List<IUML> umlList = this.projectManager.getProject().getUmlList();
+        for(int i = 0; i < umlList.size(); i++){
+            try {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(umlList.get(i).getClassName()+".java", Context.MODE_PRIVATE));
+                outputStreamWriter.write(projectCode.get(i).toString());
+                outputStreamWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
     }
 }

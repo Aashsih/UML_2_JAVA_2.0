@@ -1,6 +1,7 @@
 package uml_components;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import utils.ClassType;
@@ -15,7 +16,12 @@ public class UML implements Serializable, IUML{
 	private List<IVariable> variableList;
 	
 	
-	
+	public UML(){
+		this.className = "Class Name";
+		this.classType = ClassType.CLASS;
+		this.methodList = new ArrayList<>();
+		this.variableList = new ArrayList<>();
+	}
 	
 	public UML(String className, ClassType classType, List<IMethod> methodList, List<IVariable> variableList) {
 		

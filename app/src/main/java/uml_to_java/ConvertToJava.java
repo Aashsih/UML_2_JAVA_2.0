@@ -1,5 +1,7 @@
 package uml_to_java;
 
+import android.os.Bundle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import utils.AccessModifier;
 public class ConvertToJava {
 
     private IProject project;
+
 
     public ConvertToJava(IProject project){
         if(project == null){
