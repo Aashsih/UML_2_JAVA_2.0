@@ -175,13 +175,15 @@ public class ProjectViewer extends AppCompatActivity {
 
         if(v.getId()==R.id.saveProject){
             IProject currentProject = this.projectManager.getProject();
-            currentProject.setProjectName(((EditText)findViewById(R.id.projectName)).toString());
+            currentProject.setProjectName(((EditText)findViewById(R.id.projectName)).getText().toString());
             try {
-                FileOutputStream fileOutputStream = openFileOutput(currentProject.getProjectName() + ".ser", Context.MODE_PRIVATE);
+                String fileName = currentProject.getProjectName() + ".ser";
+                FileOutputStream fileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 objectOutputStream.writeObject(currentProject);
                 objectOutputStream.close();
                 fileOutputStream.close();
+                Toast.makeText(this,"Project Saved", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -216,7 +218,7 @@ public class ProjectViewer extends AppCompatActivity {
 
                 //make sure to delete all these files after the email has been sent
 
-
+                Toast.makeText(this,"Files Saved", Toast.LENGTH_SHORT).show();
                 outputStreamWriter.close();
 
             } catch (Exception e) {
