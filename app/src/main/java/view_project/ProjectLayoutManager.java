@@ -18,29 +18,59 @@ import uml_components.UML;
 
 /**
  * Created by Aashish Indorewala on 27-Aug-16.
+ *
+ * This class Controls communication between the ProjectViewer class and the Project class
+ *
+ * It stores both the UI components and the DataStructure Project and is used to communicate
+ * for all creating, storing and editing option
  */
 public class ProjectLayoutManager {
-    //private static int CLASS_ID = 0;
-    //Navigation VIew
+    //Abstraction
     private IProject project;
-    private List<CheckBox> classList = null;
-    private List<UmlLayout> umlFragments = null;
+
+    //Navigation VIew -- Control
+    private List<CheckBox> classList = null;//Stores CheckBox references for all the Classes created in the current project
+    private List<UmlLayout> umlFragments = null;//Stores all the Fragments of type UmlLayout
     public ProjectLayoutManager(){
         project = new Project();
         classList = new ArrayList<>();
         umlFragments = new ArrayList<>();
     }
+
+    /**
+     * This class adds a checkbox for each Class that the user creates.
+     *
+     */
+    public final void addCheckBox(CheckBox checkBox){
+        //CLASS_ID++;
+        this.classList.add(checkBox);//Store the CheckBox reference
+        this.project.getUmlList().add(new UML());//add a new UML Class to the project to be stored
+        this.umlFragments.add(new UmlLayout());//Create the UmlLayout Fragment to be displayed
+
+    }
+
+    /**
+     * This method returns all the Classes that have been checked (selected by the user)
+     * This method can be used to:
+     * 1. Delete
+     * 2. View ..multiple classes
+     *
+     */
+    public List<CheckBox> getCheckedCheckBoxes(){
+        List<CheckBox> checkedCheckBoxes = new ArrayList<CheckBox>();
+        for(CheckBox checkBox : classList){
+            if(checkBox.isChecked()){
+                checkedCheckBoxes.add(checkBox);
+            }
+        }
+        return checkedCheckBoxes;
+    }
+    //Getters and Setters
     public final IProject getProject(){
         return project;
     }
 
-    public final void addCheckBox(CheckBox checkBox){
-        //CLASS_ID++;
-        this.classList.add(checkBox);
-        this.project.getUmlList().add(new UML());
-        this.umlFragments.add(new UmlLayout());
 
-    }
 
     public final List<CheckBox> getClassList(){
         return classList;
@@ -55,57 +85,5 @@ public class ProjectLayoutManager {
         return this.umlFragments.get(position);
     }
 
-    public List<CheckBox> getCheckedCheckBoxes(){
-        List<CheckBox> checkedCheckBoxes = new ArrayList<CheckBox>();
-        for(CheckBox checkBox : classList){
-            if(checkBox.isChecked()){
-                checkedCheckBoxes.add(checkBox);
-            }
-        }
-        return checkedCheckBoxes;
-    }
-
-
-//    //UML layout for a class (Control talking to presentation)
-//    private EditText className;
-//    private Spinner classType;
-//    List<FieldLayout> fields;
-//    List<MethodLayout> methods;
-//
-//    //Field
-//    private class FieldLayout{
-//        private Spinner fieldAccessModifier;
-//        private EditText fieldName;
-//        private EditText dataType;
-//        private CheckBox isFinal;
-//        private CheckBox isStatic;
-//
-//        public FieldLayout(Spinner fieldAccessModifier, EditText fieldName, EditText dataType, CheckBox isFinal, CheckBox isStatic){
-//            this.fieldAccessModifier = fieldAccessModifier;
-//            this.fieldName = fieldName;
-//            this.dataType = dataType;
-//            this.isFinal = isFinal;
-//            this.isStatic = isStatic;
-//        }
-//    }
-//
-//    //Method
-//    private class MethodLayout{
-//        private Spinner methodAccessModifier;
-//        private EditText methodName;
-//        private EditText parameters;
-//        private EditText returnType;
-//        private CheckBox isFInal;
-//        private CheckBox isStatic;
-//
-//        public MethodLayout(Spinner methodAccessModifier, EditText methodName,EditText paramters, EditText returnType, CheckBox isFInal, CheckBox isStatic){
-//            this.methodAccessModifier = methodAccessModifier;
-//            this.methodName = methodName;
-//            this.parameters = paramters;
-//            this.returnType = returnType;
-//            this.isFInal = isFInal;
-//            this.isStatic = isStatic;
-//        }
-//    }
 
 }

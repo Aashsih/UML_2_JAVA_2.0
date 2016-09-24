@@ -5,7 +5,20 @@ import java.io.Serializable;
  */
 import utils.AccessModifier;
 
-
+/**
+ * Created by Aashish Indorewala on 27-Aug-16.
+ *
+ * This class stores all the information for one Method:
+ * 1. AccessModifier
+ * 2. Is method static
+ * 3. Is Method final
+ * 4. ReturnType
+ * 5. MethodName
+ * 6. Paramteres
+ *
+ * This class should only be used through its interface eg:
+ * IMethod aMethod = new Method();
+ */
 public class Method implements Serializable, IMethod{
 	
 	private AccessModifier access;
@@ -27,7 +40,7 @@ public class Method implements Serializable, IMethod{
 		this.setParameters(parameters);
 		
 	}
-
+	//Getters and Setters
 	public Method(){
 		this(AccessModifier.DEFAULT,false,false,"","","");
 	}

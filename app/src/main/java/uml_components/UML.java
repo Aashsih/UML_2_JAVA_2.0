@@ -8,6 +8,15 @@ import utils.ClassType;
 
 /**
  * Created by Aashish Indorewala on 27-Aug-16.
+ *
+ * This Class represents one UML Class Diagram containing:
+ * 1. Class Name
+ * 2. Class Type (CLASS,ENUMERATION,INTERFACE)
+ * 3. Methods : List of methods
+ * 4. Fields : list of fields
+ *
+ * This class should only be instantiated through the interface IUML eg:
+ * IUML aUML = new UML();
  */
 public class UML implements Serializable, IUML{
 	private String className;

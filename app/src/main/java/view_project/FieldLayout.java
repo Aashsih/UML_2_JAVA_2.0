@@ -6,6 +6,8 @@ import android.widget.Spinner;
 
 /**
  * Created by Aashish Indorewala on 23-Sep-16.
+ *
+ * This class contains all Views used to make the FieldLayout in field_layout.xml
  */
 public class FieldLayout {
     //
@@ -23,6 +25,7 @@ public class FieldLayout {
         this.isStatic = isStatic;
     }
 
+    //Getters and Setters
     public Spinner getFieldAccessModifier() {
         return fieldAccessModifier;
     }

@@ -6,6 +6,11 @@ import utils.AccessModifier;
 
 /**
  * Created by Aashish Indorewala on 27-Aug-16.
+ *
+ * This class stores all the information for a variable that could be passed as a parameter.
+ * This class will not be used as of now but forms a basis for the Field class.
+ * This class is created to be modified later in case compiler checks for user's inputs are to be made.
+ *
  */
 public class Variable implements Serializable,IVariable{
 	protected String varName;
@@ -23,6 +28,7 @@ public class Variable implements Serializable,IVariable{
 		this("","",false);
 	}
 
+	//Getters and Setters
 	public final String getVarName() {
 		return varName;
 	}
@@ -43,6 +49,8 @@ public class Variable implements Serializable,IVariable{
 	public final void setFinal(boolean isFinal){
 		this.isFinal = isFinal;
 	}
+
+	//The following methods are not Required for a Variable
 	@Override
 	public void setAccessModifier(AccessModifier modifier) {
 		// TODO Auto-generated method stub

@@ -4,6 +4,10 @@ import java.util.List;
 import utils.AccessModifier;
 /**
  * Created by Aashish Indorewala on 27-Aug-16.
+ *
+ * This is an interface between the user and the Method class.
+ * The Method class should only be instantiated through this interface eg:
+ * IMethod aMethod = new Method();
  */
 public interface IMethod {
 	

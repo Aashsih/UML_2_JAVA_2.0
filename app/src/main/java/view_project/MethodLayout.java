@@ -6,6 +6,8 @@ import android.widget.Spinner;
 
 /**
  * Created by Aashish Indorewala on 23-Sep-16.
+ *
+ * This class contains all the Views used in method_layout.xml
  */
 public class MethodLayout {
 
@@ -25,6 +27,7 @@ public class MethodLayout {
         this.isStatic = isStatic;
     }
 
+    //Getters and Setters
     public Spinner getMethodAccessModifier() {
         return methodAccessModifier;
     }

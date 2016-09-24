@@ -6,6 +6,10 @@ import utils.ClassType;
 
 /**
  * Created by Aashish Indorewala on 27-Aug-16.
+ *
+ *This represents an interface between the user and the UML Class
+ *This should be used to interact with the user eg:
+ * IUML aUML = new UML():
  */
 public interface IUML {
 	//Getters

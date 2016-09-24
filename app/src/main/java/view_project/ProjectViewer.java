@@ -37,10 +37,19 @@ import project.IProject;
 import uml_components.IUML;
 import uml_to_java.ConvertToJava;
 
+/**
+ * This class contains the Project Activity.
+ * This Activity (DrawerLayout) will start of to be empty if a new Project is created or
+ * will be populated with the stored work of the user
+ *
+ * Note: This sprint is only limited to saving the user's work
+ */
 public class ProjectViewer extends AppCompatActivity {
 
+    //Communicates between the UI components and the Project
     private ProjectLayoutManager projectManager = new ProjectLayoutManager();
-    private DrawerLayout drawerLayout;// = new DrawerLayout();
+
+    private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerListener;
 
     @Override
@@ -59,101 +68,109 @@ public class ProjectViewer extends AppCompatActivity {
         drawerListener.syncState();
     }
 
-    public void addClass(View view){
-        LinearLayout classList = (LinearLayout) findViewById(R.id.classList);
-        View aClass = getLayoutInflater().inflate(R.layout.classname,null);
-        CheckBox aClassCheckBox = (CheckBox)aClass.findViewById(R.id.checkBox);
-//        aClassCheckBox.setId(projectManager.getClassId());
-//        aClassCheckBox.setText("Class" + (projectManager.getClassId() + 1));
-        aClassCheckBox.setId(projectManager.getClassList().size());
-        aClassCheckBox.setText("Class" + (projectManager.getClassList().size() + 1));
-        //Dont delete or uncomment the following code before discussing with Aashish
-//        aClassCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                //projectManager.getCheckedCheckBoxes() == 1 -> if more than 1
-//                // check boxes are checked then we want to display the uml relationship diagram
-//                if(isChecked && projectManager.getCheckedCheckBoxes() == 1){
-//                    //launch an activity for displaying classes
-//                    FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
-//                    aTransaction.replace(R.id.frameLayout,
-//                            projectManager.getUmlFragment(projectManager.getClassList().indexOf((CheckBox)buttonView)));
-//                    aTransaction.addToBackStack(null);
-//                    aTransaction.commit();
-//                    drawerLayout.closeDrawers();
-//                }
-//            }
-//        });
-        classList.addView(aClass);
-        projectManager.addCheckBox(aClassCheckBox);
-
-    }
-
-    public void viewClass(View view){
-        List<CheckBox> selectedClasses = projectManager.getCheckedCheckBoxes();
-        switch(selectedClasses.size()){
-            case 0: break;
-            case 1:
-            {
-                //when only one class needs to be viewed
-                FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
-                int indexOfClass = projectManager.getClassList().indexOf(selectedClasses.get(0));
-                UmlLayout umlLayout = projectManager.getUmlFragment(indexOfClass);
-
-
-                aTransaction.replace(R.id.frameLayout,umlLayout);
-                aTransaction.addToBackStack(null);
-                aTransaction.commit();
-                drawerLayout.closeDrawers();
-
-                umlLayout.setClassPositionInProject(indexOfClass);
-                if(projectManager.getProject().getUmlList().size() > indexOfClass){
-                    umlLayout.setUML(projectManager.getProject().getUmlList().get(indexOfClass));
-
-                }
-                //drawerLayout.closeDrawers();
-                //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            }
-            default:
-            {
-                //this is where multiple classes will be view together
-            }
-        }
-    }
-
     @Override
     public void onPostCreate(Bundle saveInstanceState){
         super.onPostCreate(saveInstanceState);
         drawerListener.syncState();
     }
-
-    public ProjectLayoutManager getProjectManager(){
-        return projectManager;
-    }
     @Override
     public void onBackPressed()
     {
         if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-            drawerLayout.closeDrawer(Gravity.LEFT);
+            finish();
         }
         else{
             drawerLayout.openDrawer(Gravity.LEFT);
         }
 
     }
+    /**
+     *
+     * This method is called when the Add Class button is cliked from the Sliding Menu.
+     * 1. Adds a new CheckBox for the Class, sets its Id and Text
+     * 2. Initializes The UmlLayout (Fragment) for the class
+     */
+    public void addClass(View view){
+        LinearLayout classList = (LinearLayout) findViewById(R.id.classList);
+        View aClass = getLayoutInflater().inflate(R.layout.classname,null);
+        CheckBox aClassCheckBox = (CheckBox)aClass.findViewById(R.id.checkBox);
+        aClassCheckBox.setId(projectManager.getClassList().size());
+        aClassCheckBox.setText("Class" + (projectManager.getClassList().size() + 1));
+        classList.addView(aClass);
+        projectManager.addCheckBox(aClassCheckBox);
+
+    }
+
+    /**
+     * This method is called when the View button from the Sliding Menu is clicked.
+     *
+     */
+    public void viewClass(View view){
+        //Get List of classes that the user has selected in the SlidingMenu
+        List<CheckBox> selectedClasses = projectManager.getCheckedCheckBoxes();
+
+        switch(selectedClasses.size()){
+            case 0: break; //If no classes are selected
+            case 1: //If one class is selected, allow the user to edit the class (UmlLayout Fragment)
+            {
+                //when only one class needs to be viewed
+                FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
+                //get index of the selected class
+                int indexOfClass = projectManager.getClassList().indexOf(selectedClasses.get(0));
+                //Get the fragment that needs to be Viewed
+                UmlLayout umlLayout = projectManager.getUmlFragment(indexOfClass);
+
+                //Replace the old Fragment with the selected UmlLayout Fragment
+                aTransaction.replace(R.id.frameLayout,umlLayout);
+                aTransaction.addToBackStack(null);
+                aTransaction.commit();
+                drawerLayout.closeDrawers();//Close the Sliding Menu
+                //Pass the index of the selected class to the UmlLayout
+                umlLayout.setClassPositionInProject(indexOfClass);
+                //If the Fragment has a saved state then restore it
+                if(projectManager.getProject().getUmlList().size() > indexOfClass){
+                    umlLayout.setUML(projectManager.getProject().getUmlList().get(indexOfClass));
+
+                }
+
+            }
+            default:
+            {
+                //this is where multiple classes will be viewed together
+            }
+        }
+    }
+
+    /**
+     *
+     * This method is executed when the user clicks on the Select All button from the SlidingMenu.
+     * This methods sets the isChecked attribute for all the CheckBoxes to true
+     *
+     */
     public void selectAll(View view){
 
-        for(CheckBox aClass : projectManager.getClassList()){
-            aClass.setChecked(true);
+        for(CheckBox aClass : projectManager.getClassList()){//for all CheckBoxes in the Project
+            aClass.setChecked(true);//Set Checked to true
         }
     }
 
+    /**
+     *
+     * This method is executed when the user clicks on the Deselect All button from the SlidingMenu.
+     * This methods sets the isChecked attribute for all the CheckBoxes to false
+     *
+     */
     public void deselectAll(View view){
 
-        for(CheckBox aClass : projectManager.getClassList()){
-            aClass.setChecked(false);
+        for(CheckBox aClass : projectManager.getClassList()){//for all CheckBoxes in the Project
+            aClass.setChecked(false);//Set Checked to false
         }
     }
+
+    /**
+     * This method is executed the user click the Save Project button from the Sliding Menu.
+     * The methods store the current state of the Project as a ".ser" file in the App directory
+     */
     public void onSaveProject(View v){
 
         if(v.getId()==R.id.saveProject){
@@ -169,7 +186,6 @@ public class ProjectViewer extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
 //            Other Method
 //            SharedPreferences myPreferns = getPreferences(MODE_PRIVATE);
 //
@@ -182,6 +198,12 @@ public class ProjectViewer extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is executed when the Conver To Java button from the Sliding Menu is Clicked.
+     * This Methods converts the current state of the Project into Java code which is
+     * stored as .java file temporarily and then emailed to the user
+     *
+     */
     public void convertToJava(View v){
         ConvertToJava javaCode = new ConvertToJava(this.projectManager.getProject());
         List<StringBuilder> projectCode = javaCode.getJavaCode();
@@ -190,7 +212,13 @@ public class ProjectViewer extends AppCompatActivity {
             try {
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(umlList.get(i).getClassName()+".java", Context.MODE_PRIVATE));
                 outputStreamWriter.write(projectCode.get(i).toString());
+
+
+                //make sure to delete all these files after the email has been sent
+
+
                 outputStreamWriter.close();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -198,5 +226,9 @@ public class ProjectViewer extends AppCompatActivity {
 
 
 
+    }
+    //get ProjectLayout Manager
+    public ProjectLayoutManager getProjectManager(){
+        return projectManager;
     }
 }
