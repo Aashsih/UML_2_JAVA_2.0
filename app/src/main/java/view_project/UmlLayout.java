@@ -137,6 +137,8 @@ public class UmlLayout extends Fragment {
                 //Get the UML list to store information into it form the Class Diagram
                 List<IUML> umlForFragment = currentProjectLayoutManager.getProject().getUmlList();
 
+                //Store the importStatements
+                String importStatementss = ((EditText)(rootView.findViewById(R.id.importStatements))).getText().toString();
                 //Store the class name
                 String className = ((EditText)(rootView.findViewById(R.id.className))).getText().toString();
                 //Store the class type
@@ -147,7 +149,7 @@ public class UmlLayout extends Fragment {
                 List<IVariable> fields = getFields();
                 //Save the Information in the UML List
                 if(umlForFragment.size() > classPositionInProject){
-                    umlForFragment.set(classPositionInProject,new UML(className,classType,methods,fields));
+                    umlForFragment.set(classPositionInProject,new UML(importStatementss,className,classType,methods,fields));
                     //Change the name of the CheckBox on the UI to the Class Name entered by the user
                     ((CheckBox)(currentProjectLayoutManager.getClassList().get(classPositionInProject))).setText(className);
                 }
@@ -271,7 +273,7 @@ public class UmlLayout extends Fragment {
 
     //This method restores the saved state of the Fragment
     private final void setUpFragment(IUML uml) {
-
+        ((EditText) (rootView.findViewById(R.id.importStatements))).setText(uml.getImportStatements());
         ((EditText) (rootView.findViewById(R.id.className))).setText(uml.getClassName());
         ((Spinner) (rootView.findViewById(R.id.classType))).setSelection(ClassType.valueOf(uml.getClassType().toString()).ordinal());
 

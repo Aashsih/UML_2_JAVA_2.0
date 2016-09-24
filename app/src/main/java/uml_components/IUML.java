@@ -17,10 +17,12 @@ public interface IUML {
 	public ClassType getClassType();
 	public List<IMethod> getMethodList();
 	public List<IVariable> getVariableList();
+	public String getImportStatements();
 	
 	//Setters
 	public void setClassName(String className);
 	public void setClassType(ClassType classType);
 	public void setMethodList(List<IMethod> methodList);
 	public void setVariableList(List<IVariable> variableList);
+	public void setImportStatements(String importStatements);
 }

@@ -19,6 +19,7 @@ import utils.ClassType;
  * IUML aUML = new UML();
  */
 public class UML implements Serializable, IUML{
+	private String importStatements;
 	private String className;
 	private ClassType classType;
 	private List<IMethod> methodList;
@@ -26,14 +27,15 @@ public class UML implements Serializable, IUML{
 	
 	
 	public UML(){
+		this.importStatements = "";
 		this.className = "Class Name";
 		this.classType = ClassType.CLASS;
 		this.methodList = new ArrayList<>();
 		this.variableList = new ArrayList<>();
 	}
 	
-	public UML(String className, ClassType classType, List<IMethod> methodList, List<IVariable> variableList) {
-		
+	public UML(String importStatements,String className, ClassType classType, List<IMethod> methodList, List<IVariable> variableList) {
+		this.importStatements = importStatements;
 		this.className = className;
 		this.classType = classType;
 		this.methodList = methodList;
@@ -56,7 +58,12 @@ public class UML implements Serializable, IUML{
 	public final List<IVariable> getVariableList() {
 		return variableList;
 	}
-	
+
+	@Override
+	public String getImportStatements() {
+		return importStatements;
+	}
+
 	//Setters
 	@Override
 	public final void setClassName(String className) {
@@ -74,13 +81,11 @@ public class UML implements Serializable, IUML{
 	public final void setVariableList(List<IVariable> variableList) {
 		this.variableList = variableList;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public void setImportStatements(String importStatements) {
+		this.importStatements = importStatements;
+	}
+
+
 }

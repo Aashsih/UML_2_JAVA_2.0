@@ -49,7 +49,15 @@ public class ConvertToJava {
      * This Class returns the Java code for one class
      */
     private final StringBuilder getClassCode(IUML uml){
-        StringBuilder classCode = new StringBuilder("public");
+        StringBuilder classCode = new StringBuilder("");
+        if(!(uml.getImportStatements() == null || uml.getImportStatements() == "")){
+            String[] importStatements = uml.getImportStatements().split("\\n+");
+            for(String anImportStatement : importStatements){
+                classCode.append("import " + anImportStatement + ";\n");
+            }
+            classCode.append("\n");
+        }
+        classCode.append("public");
         classCode.append(getClassTypeInformation(uml)); //Add ClassType
 
         classCode.append(getFieldsCode(uml.getVariableList()));//Get Java Code for Fields of a class

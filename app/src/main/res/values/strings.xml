@@ -5,6 +5,7 @@
     <string name="title_activity_project_viewer">Project Viewer</string>
 
     <!-- UML layout-->
+
     <string name="className">Class name</string>>
     <string name="classType">Class</string>>
     <string name="addField">Add Field</string>
