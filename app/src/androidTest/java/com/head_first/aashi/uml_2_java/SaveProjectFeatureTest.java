@@ -2,25 +2,21 @@ package com.head_first.aashi.uml_2_java;
 
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
 import android.widget.Button;
-
 import org.junit.Test;
-
 import java.io.File;
 
-import static org.junit.Assert.assertEquals;
 
 
 /**
- * Created by moses on 26/09/2016.
+ * Class to implement Junit testing to check the Project Save Feature/User Story
+ * Created by moses
  */
 public class SaveProjectFeatureTest extends ActivityInstrumentationTestCase2<ProjectPage> {
 
 
 
     private Button checkSaveProjectButton;
-    private View mainLayout;
     ProjectPage mainActivity;
     private Context context;
 
