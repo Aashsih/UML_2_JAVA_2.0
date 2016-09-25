@@ -17,15 +17,20 @@
             android:hint="List package names here"
             android:id="@+id/importStatements"
             android:background="#FFFFFF" />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/className"
+                android:id="@+id/className"
+                android:background="#cecdcd"
+                android:layout_gravity="center_horizontal" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/className"
-            android:id="@+id/className"
-            android:background="#cecdcd"
-            android:layout_gravity="center_horizontal" />
+
+        </HorizontalScrollView>
 
         <Spinner
             style="?android:attr/buttonStyleSmall"
@@ -41,14 +46,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:id="@+id/scrollView"
         android:fillViewport="false"
-        android:layout_weight="0.09"
-        android:layout_height="370dp">
+        android:layout_weight="10">
 
 
         <LinearLayout
@@ -117,7 +122,8 @@
             android:layout_height="wrap_content"
             android:text="@string/saveClass"
             android:id="@+id/saveClass"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
