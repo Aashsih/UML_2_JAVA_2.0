@@ -5,7 +5,8 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import org.junit.Test;
 import java.io.File;
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 /**
@@ -47,8 +48,13 @@ public class SaveProjectFeatureTest extends ActivityInstrumentationTestCase2<Pro
      */
     @Test
     public void isFilePresent(String fileName) throws Exception {
-        String path = context.getFilesDir().getAbsolutePath() + "/" + fileName;
-        File file = new File(path);
-        assertTrue(file.exists());
+
+            String path = context.getFilesDir().getAbsolutePath() + "/" + fileName;
+            File file = new File(path);
+            assertTrue(file.exists());
+            if(!file.exists()){
+                throw new FileNotFoundException();
+            }
+
     }
 }
