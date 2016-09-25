@@ -2,8 +2,9 @@ package com.head_first.aashi.uml_2_java;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,9 +39,9 @@ public class ProjectPage extends Activity {
     //All information from UML classes will be saved onto the internal storage of the device as a String File.
     //Alternatively we can use Gson to store the UML data as a Project data. (This option is to discussed in the next Sprint)
     //I have already added the appropriate library file to the build.gradle in the dependencies section.
-    protected void onSaveProject(View v){
+    protected void onSaveProjectTest(View v){
 
-        if(v.getId()==R.id.saveProject){
+        if(v.getId()==R.id.saveProjectTest){
 
             //Update the project name from the Project Name Text Field
             p.setProjectName(projectName.getText().toString());
@@ -53,7 +54,7 @@ public class ProjectPage extends Activity {
                 e.printStackTrace();
             }
 
-//            Other Method
+//            Other Method (To be finalised by the team in next Sprint)
 //            SharedPreferences myPreferns = getPreferences(MODE_PRIVATE);
 //
 //            Editor prefsEditor = myPreferns.edit();
@@ -63,5 +64,47 @@ public class ProjectPage extends Activity {
 //            prefsEditor.commit();
 
         }
+    }
+
+
+
+    //Code to Test the Share File feature
+    protected void onShareProject(View v){
+
+        if(v.getId()==R.id.shareProject){
+
+
+//            try {
+//                FileOutputStream fileOut = openFileOutput(projectName.getText().toString(),MODE_PRIVATE);
+//                fileOut.write(projectName.getText().toString().getBytes());  //Store the toString() of the project object.
+//                Toast.makeText(getApplicationContext(),"Project Saved", Toast.LENGTH_LONG).show();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("Java File");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Test UML Project");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Sharing the ToString of the Project File here ");
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
+        }
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
