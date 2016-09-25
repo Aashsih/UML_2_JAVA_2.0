@@ -24,6 +24,18 @@ import project.Project;
 public class ProjectPage extends Activity {
     private IProject p;
     private EditText projectName;
+    private Boolean fileSaved;
+
+
+    public Boolean getFileSaved() {
+        return fileSaved;
+    }
+
+    public EditText getProjectName() {
+        return projectName;
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +58,12 @@ public class ProjectPage extends Activity {
             //Update the project name from the Project Name Text Field
             p.setProjectName(projectName.getText().toString());
 
+
             try {
                 FileOutputStream fileOut = openFileOutput(p.getProjectName(),MODE_PRIVATE);
                 fileOut.write(p.toString().getBytes());  //Store the toString() of the project object.
                 Toast.makeText(getApplicationContext(),"Project Saved", Toast.LENGTH_LONG).show();
+                fileSaved = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -63,6 +77,9 @@ public class ProjectPage extends Activity {
 //            prefsEditor.putString("MyObject", json);
 //            prefsEditor.commit();
 
+
+
+
         }
     }
 
@@ -73,18 +90,17 @@ public class ProjectPage extends Activity {
 
         if(v.getId()==R.id.shareProject){
 
-
-//            try {
-//                FileOutputStream fileOut = openFileOutput(projectName.getText().toString(),MODE_PRIVATE);
-//                fileOut.write(projectName.getText().toString().getBytes());  //Store the toString() of the project object.
-//                Toast.makeText(getApplicationContext(),"Project Saved", Toast.LENGTH_LONG).show();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+           // String shareProjectAsJavaFile = p.toString();
 
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+            //The File Type to be shared
             sharingIntent.setType("Java File");
+
+            //The Title of the File being Shared (This will be the title of the project)
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Test UML Project");
+
+            //The body of the File being shared (This will be the toString representation of the Project File)
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Sharing the ToString of the Project File here ");
             startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
@@ -92,7 +108,21 @@ public class ProjectPage extends Activity {
     }
 
 
+    //
+    public void saveProjectToRunTest(){
+        projectName.setText("Test File");
 
+        try {
+            FileOutputStream fileOut = openFileOutput("Test File",MODE_PRIVATE);
+            fileOut.write(p.toString().getBytes());  //Store the toString() of the project object.
+            Toast.makeText(getApplicationContext(),"Project Saved as 'Test File'", Toast.LENGTH_LONG).show();
+            fileSaved = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Code to Handle the items on Menu if needed (Share Feature can also be added here)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -107,4 +137,8 @@ public class ProjectPage extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
 }

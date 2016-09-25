@@ -34,6 +34,5 @@
         android:id="@+id/shareProject"
         android:layout_gravity="center_horizontal"
         android:clickable="true"
-        android:onClick="onShareProject"
-        android:visibility="visible" />
+        android:onClick="onShareProject"/>
 </LinearLayout>
