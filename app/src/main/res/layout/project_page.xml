@@ -22,8 +22,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save Project"
-        android:id="@+id/saveProject"
+        android:id="@+id/saveProjectTest"
         android:layout_gravity="center_horizontal"
         android:clickable="true"
-        android:onClick="onSaveProject" />
+        android:onClick="onSaveProjectTest" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share Project"
+        android:id="@+id/shareProject"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true"
+        android:onClick="onShareProject"/>
 </LinearLayout>
