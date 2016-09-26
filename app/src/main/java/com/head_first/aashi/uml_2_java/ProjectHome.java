@@ -39,7 +39,7 @@ public class ProjectHome extends AppCompatActivity {
     //Handles the Open Project Button
     protected void onOpenProject(View v){
         if(v.getId()==R.id.openProject){
-            Toast.makeText(getApplicationContext(),"To be implemented in Sprint 2", Toast.LENGTH_LONG).show();
+             Toast.makeText(getApplicationContext(),"To be implemented in Sprint 2", Toast.LENGTH_LONG).show();
 
             //We can read the file as Bytes from a String or use Gson and shared preference to read the file as a UML Project object.
             //This feature is not part of Sprint0 hence the methods will be discussed with the Scrum Master & the team before finalising

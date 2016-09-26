@@ -57,7 +57,7 @@ public class ConvertToJava {
             }
             classCode.append("\n");
         }
-        classCode.append("public");
+        classCode.append("public ");
         classCode.append(getClassTypeInformation(uml)); //Add ClassType
 
         classCode.append(getFieldsCode(uml.getVariableList()));//Get Java Code for Fields of a class
@@ -79,7 +79,8 @@ public class ConvertToJava {
         switch(uml.getClassType()){
             case CLASS :
             {
-                classTypeInformation.append("class" + uml.getClassName() + "{\n");
+                classTypeInformation.append("class " + uml.getClassName() + "{\n");
+                break;
             }
 //            case INTERFACE:
 //            {
@@ -91,7 +92,7 @@ public class ConvertToJava {
 //            }
             default:
             {
-                classTypeInformation.append("class" + uml.getClassName() + "{\n");
+                classTypeInformation.append("class " + uml.getClassName() + "{\n");
             }
 
         }
@@ -132,7 +133,7 @@ public class ConvertToJava {
             //then returnig the default value
             methodCode.append(method.getParameters() + "){\n");
             methodCode.append("\t\treturn " + getReturnType(method.getReturnType()) + ";\n");//add the appropriate return statement
-            methodCode.append("\t}");
+            methodCode.append("\t}\n");
 
         }
 
@@ -176,19 +177,23 @@ public class ConvertToJava {
             case PUBLIC:
             {
                 accessModifierString.append("public ");
+                break;
             }
             case PRIVATE:
             {
                 accessModifierString.append("private ");
+                break;
             }
             case PROTECTED:
             {
                 accessModifierString.append("protected ");
+                break;
             }
             case DEFAULT:
             default:
             {
                 accessModifierString.append("");
+
             }
 
         }

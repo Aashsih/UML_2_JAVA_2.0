@@ -30,7 +30,7 @@
     <string name="projectName">Project Name</string>
     <string name="addClass">Add Class</string>
     <string name="saveProject">Save Project</string>
-    <string name="convertToJava">Convert To Java</string>
+    <string name="convertToJava">Save and Share Java Code</string>
     <string name="selectAll">Select All</string>
     <string name="deselectAll">Deselect All</string>
     <string name="viewClass">View</string>
