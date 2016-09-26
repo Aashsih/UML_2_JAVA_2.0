@@ -95,7 +95,7 @@ public class ProjectPage extends Activity {
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 
             //The File Type to be shared
-            sharingIntent.setType("Java File");
+            sharingIntent.setType("plain/text");
 
             //The Title of the File being Shared (This will be the title of the project)
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Test UML Project");
@@ -103,6 +103,17 @@ public class ProjectPage extends Activity {
             //The body of the File being shared (This will be the toString representation of the Project File)
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Sharing the ToString of the Project File here ");
             startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
+
+
+//      Alternatively we can use Just Email Application to Share with the following COde
+//            Intent intent = new Intent(Intent.ACTION_SEND);
+//            intent.setType("text/html");
+//            intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
+//            intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+//            intent.putExtra(Intent.EXTRA_TEXT, "I'm email body.");
+//
+//            startActivity(Intent.createChooser(intent, "Send Email"));
 
         }
     }
