@@ -184,5 +184,4 @@ public class MethodFieldTest {
 
         assertNotNull(mSpinner);
     }
-
 }
