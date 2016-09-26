@@ -1,6 +1,7 @@
 package view_project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
@@ -210,22 +211,31 @@ public class ProjectViewer extends AppCompatActivity {
         ConvertToJava javaCode = new ConvertToJava(this.projectManager.getProject());
         List<StringBuilder> projectCode = javaCode.getJavaCode();
         List<IUML> umlList = this.projectManager.getProject().getUmlList();
+        String javaFileTOShare = "";
+        String buffer = "";
+        // sharingIntent used to share multiple Java classes from the Project File
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+        //The File Type to be shared
+        sharingIntent.setType("plain/text");
+        //The Title of the File being Shared (This will be the title of the Class)
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,this.projectManager.getProject().getProjectName());
+
         for(int i = 0; i < umlList.size(); i++){
             try {
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(umlList.get(i).getClassName()+".java", Context.MODE_PRIVATE));
-                outputStreamWriter.write(projectCode.get(i).toString());
-
-
-                //make sure to delete all these files after the email has been sent
-
-                Toast.makeText(this,"Files Saved", Toast.LENGTH_SHORT).show();
-                outputStreamWriter.close();
+                 buffer += projectCode.get(i).toString();
+                    buffer+="\n\n";
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
 
+
+        }
+        //The body of the File being shared (This will be the toString representation of each Class)
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, buffer);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+        Toast.makeText(getApplicationContext(),"Successfully Added File to Share", Toast.LENGTH_LONG).show();
 
 
     }
