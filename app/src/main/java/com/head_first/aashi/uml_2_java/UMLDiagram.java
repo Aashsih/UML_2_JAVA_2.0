@@ -33,7 +33,7 @@ public class UMLDiagram extends AppCompatActivity {
         //Intent test = new Intent(this, ProjectViewer.class);
         Intent test = new Intent(this, ProjectHome.class);
         startActivity(test);
-
+        finish();
         //testing ends here, The above code can be deleted
 
     }
