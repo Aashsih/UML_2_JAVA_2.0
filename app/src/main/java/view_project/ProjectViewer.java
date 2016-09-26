@@ -202,8 +202,8 @@ public class ProjectViewer extends AppCompatActivity {
     }
 
     /**
-     * This method is executed when the Convert To Java button from the Sliding Menu is Clicked.
-     * This Methods converts the current state of the Project into Java code which can be shared via different SHaring Applications
+     * This method is executed when the Conver To Java button from the Sliding Menu is Clicked.
+     * This Methods converts the current state of the Project into Java code which is
      * stored as .java file temporarily and then emailed to the user
      *
      */
@@ -223,6 +223,9 @@ public class ProjectViewer extends AppCompatActivity {
 
         for(int i = 0; i < umlList.size(); i++){
             try {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(umlList.get(i).getClassName()+".java", Context.MODE_PRIVATE));
+                outputStreamWriter.write(projectCode.get(i).toString());
+                outputStreamWriter.close();
                  buffer += projectCode.get(i).toString();
                     buffer+="\n\n";
 
@@ -235,7 +238,7 @@ public class ProjectViewer extends AppCompatActivity {
         //The body of the File being shared (This will be the toString representation of each Class)
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, buffer);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
-        Toast.makeText(getApplicationContext(),"Successfully Stored The File to Share", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),"File Saved Successfully", Toast.LENGTH_LONG).show();
 
 
     }
