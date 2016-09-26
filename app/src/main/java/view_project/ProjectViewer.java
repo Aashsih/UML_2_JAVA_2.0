@@ -235,6 +235,7 @@ public class ProjectViewer extends AppCompatActivity {
         //The body of the File being shared (This will be the toString representation of each Class)
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, buffer);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
+        Toast.makeText(getApplicationContext(),"Successfully Added File to Share", Toast.LENGTH_LONG).show();
 
 
     }
