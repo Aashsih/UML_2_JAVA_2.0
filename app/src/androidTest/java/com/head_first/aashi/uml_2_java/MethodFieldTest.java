@@ -53,7 +53,6 @@ package com.head_first.aashi.uml_2_java;
 @LargeTest
 public class MethodFieldTest {
 
-    private Spinner mSpinner;
     @Rule
     public final ActivityTestRule<ProjectViewer> mActivityRule = new ActivityTestRule<>(ProjectViewer.class);
 
@@ -157,19 +156,37 @@ public class MethodFieldTest {
     }
 
     @Test
-    public void hasFieldAndMethodEncapsulation(){
+    public void isFieldEncapsulable(){
 
         ProjectViewer projectViewTester = mActivityRule.getActivity();
         ProjectLayoutManager projectLayoutManager = projectViewTester.getProjectManager();
         performClicks();
         UmlLayout aUML =  projectLayoutManager.getUmlFragment(projectLayoutManager.getClassList().size() - 1);
         onView(ViewMatchers.withId(R.id.addField)).perform(click());
+
         onView(ViewMatchers.withId(R.id.fieldAccessModifier)).perform(click());
-        mSpinner = (Spinner)projectViewTester.findViewById(R.id.fieldAccessModifier);
-        SpinnerAdapter mData = mSpinner.getAdapter();
+        Spinner mSpinner = (Spinner)projectViewTester.findViewById(R.id.fieldAccessModifier);
 
         assertNotNull(mSpinner);
 
+
+
+
+    }
+
+    @Test
+    public void isMethodEncapsulable() {
+
+        ProjectViewer projectViewTester = mActivityRule.getActivity();
+        ProjectLayoutManager projectLayoutManager = projectViewTester.getProjectManager();
+        performClicks();
+        UmlLayout aUML = projectLayoutManager.getUmlFragment(projectLayoutManager.getClassList().size() - 1);
+
+        onView(ViewMatchers.withId(R.id.addMethod)).perform(click());
+        onView(ViewMatchers.withId(R.id.methodAccessModifier)).perform(click());
+        Spinner mSpinner = (Spinner)projectViewTester.findViewById(R.id.methodAccessModifier);
+
+        assertNotNull(mSpinner);
     }
 
 }
