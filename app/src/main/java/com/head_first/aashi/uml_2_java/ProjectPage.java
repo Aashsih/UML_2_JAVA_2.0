@@ -8,12 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-
 import project.IProject;
 import project.Project;
 
@@ -25,12 +22,15 @@ public class ProjectPage extends Activity {
     private IProject p;
     private EditText projectName;
     private Boolean fileSaved;
+    private Boolean projectShared;
 
 
     public Boolean getFileSaved() {
         return fileSaved;
     }
-
+    public Boolean getProjectShared() {
+        return fileSaved;
+    }
     public EditText getProjectName() {
         return projectName;
     }
@@ -55,6 +55,7 @@ public class ProjectPage extends Activity {
 
         if(v.getId()==R.id.saveProjectTest){
 
+            projectName.setText("Test Class");
             //Update the project name from the Project Name Text Field
             p.setProjectName(projectName.getText().toString());
 
@@ -103,6 +104,7 @@ public class ProjectPage extends Activity {
             //The body of the File being shared (This will be the toString representation of the Project File)
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Sharing the ToString of the Project File here ");
             startActivity(Intent.createChooser(sharingIntent, "Share via"));
+            projectShared = true;
 
 
 
@@ -119,19 +121,21 @@ public class ProjectPage extends Activity {
     }
 
 
-    //
-    public void saveProjectToRunTest(){
-        projectName.setText("Test File");
-
-        try {
-            FileOutputStream fileOut = openFileOutput("Test File",MODE_PRIVATE);
-            fileOut.write(p.toString().getBytes());  //Store the toString() of the project object.
-            Toast.makeText(getApplicationContext(),"Project Saved as 'Test File'", Toast.LENGTH_LONG).show();
-            fileSaved = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    //Method to Test Project Save Feature
+//    public void saveProjectToRunTest(){
+//        projectName.setText("Test File");
+//        //Update the project name from the Project Name Text Field
+//        p.setProjectName(projectName.getText().toString());
+//
+//        try {
+//            FileOutputStream fileOut = openFileOutput("Test File",MODE_PRIVATE);
+//            fileOut.write(p.toString().getBytes());  //Store the toString() of the project object.
+//            Toast.makeText(getApplicationContext(),"Project Saved as 'Test File'", Toast.LENGTH_LONG).show();
+//            fileSaved = true;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     //Code to Handle the items on Menu if needed (Share Feature can also be added here)
     @Override

@@ -1,11 +1,15 @@
 package com.head_first.aashi.uml_2_java;
 
 import android.content.Context;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import org.junit.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 
 
 /**
@@ -27,33 +31,56 @@ public class SaveProjectFeatureTest extends ActivityInstrumentationTestCase2<Pro
     protected void setUp() throws Exception {
         super.setUp();
 
-         mainActivity = getActivity();
-         context = mainActivity.getApplication().getApplicationContext();
+        checkSaveProjectButton();
+        isFileTOInternalStorage();
+        isProjectSharedOnClick();
 
         //Check if the Save Project Button Exists
          checkSaveProjectButton = (Button) mainActivity.findViewById(R.id.saveProjectTest);
 
-        //Save a dummy Project file and check if the file is stored in the Internal Storage
-         mainActivity.saveProjectToRunTest();
-         Boolean fileSaved = mainActivity.getFileSaved();
-         if(fileSaved){
-             String fileName = mainActivity.getProjectName().getText().toString();
-             isFilePresent(fileName);
-         }
     }
 
+    /*
+    Check if the Save Project Button Works
+     */
+    @Test
+    public void checkSaveProjectButton() {
+
+        mainActivity = getActivity();
+        context = mainActivity.getApplication().getApplicationContext();
+        onView(ViewMatchers.withId(R.id.saveProjectTest)).perform(click());
+        assertTrue(mainActivity.getFileSaved());
+
+    }
     /*
     Check if the File is present in the Internal Storage of the Application
      */
     @Test
-    public void isFilePresent(String fileName) throws Exception {
+    public void isFileTOInternalStorage() {
 
+        mainActivity = getActivity();
+        context = mainActivity.getApplication().getApplicationContext();
+        onView(ViewMatchers.withId(R.id.saveProjectTest)).perform(click());
+        String fileName = mainActivity.getProjectName().getText().toString();
             String path = context.getFilesDir().getAbsolutePath() + "/" + fileName;
             File file = new File(path);
             assertTrue(file.exists());
-            if(!file.exists()){
-                throw new FileNotFoundException();
-            }
 
     }
+
+    /*
+   Check if Share Project Feature is Enabled
+    */
+    @Test
+    public void isProjectSharedOnClick() {
+
+
+        mainActivity = getActivity();
+        context = mainActivity.getApplication().getApplicationContext();
+        onView(ViewMatchers.withId(R.id.shareProject)).perform(click());
+        assertTrue(mainActivity.getProjectShared());
+
+    }
+
+
 }
