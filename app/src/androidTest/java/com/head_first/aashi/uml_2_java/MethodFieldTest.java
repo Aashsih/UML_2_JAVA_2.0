@@ -168,10 +168,6 @@ public class MethodFieldTest {
         Spinner mSpinner = (Spinner)projectViewTester.findViewById(R.id.fieldAccessModifier);
 
         assertNotNull(mSpinner);
-
-
-
-
     }
 
     @Test
