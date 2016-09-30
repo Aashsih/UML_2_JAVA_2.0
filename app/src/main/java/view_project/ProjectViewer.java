@@ -67,6 +67,12 @@ public class ProjectViewer extends AppCompatActivity {
                 R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(drawerListener);
         drawerListener.syncState();
+
+        //Get the project that the user selected to be opened in the ProjectHome activity
+        IProject currentProject = (IProject)getIntent().getSerializableExtra("hello");
+        this.projectManager = new ProjectLayoutManager(currentProject,this);
+        this.setupProject(this);
+
     }
 
     @Override
@@ -86,19 +92,60 @@ public class ProjectViewer extends AppCompatActivity {
 
     }
     /**
+     *  Helper Method
+     * When a saved Project is opened by a user this method is used to setup the
+     * layout of the ProjectViewer class and also setup the data in this class
+     */
+    public void setupProject(ProjectViewer currentProjectView){
+        currentProjectView.setProjectName();
+        for(int i = 0; i < this.projectManager.getProject().getUmlList().size(); i++){
+
+            currentProjectView.setupCheckBoxForAClass(false, i);//Create and setup a checkbox with the correct class name, then add it to the SlidingMenu
+
+        }
+    }
+    /**
      *
      * This method is called when the Add Class button is cliked from the Sliding Menu.
      * 1. Adds a new CheckBox for the Class, sets its Id and Text
      * 2. Initializes The UmlLayout (Fragment) for the class
      */
     public void addClass(View view){
+        setupCheckBoxForAClass(true,0);
+    }
+
+    /**
+     * This method adds a CheckBox to the Sliding Menu of the project.
+     * @param isNewProject is used to tell the method if a new CheckBox needs to be setup in a new Project
+     *                     or if a new CheckBox needs to be setUp from a saved project
+     * @param classPosition specifies the position of the class in the ProjectLayoutManager umlList to get the correct classs name
+     */
+    public void setupCheckBoxForAClass(boolean isNewProject, int classPosition){
         LinearLayout classList = (LinearLayout) findViewById(R.id.classList);
         View aClass = getLayoutInflater().inflate(R.layout.classname,null);
         CheckBox aClassCheckBox = (CheckBox)aClass.findViewById(R.id.checkBox);
         aClassCheckBox.setId(projectManager.getClassList().size());
-        aClassCheckBox.setText("Class" + (projectManager.getClassList().size() + 1));
+        if(isNewProject){//if a new project, setup a default check box with standard Class Name
+            aClassCheckBox.setText("Class " + (projectManager.getClassList().size() + 1));
+        }
+        else{
+            //if opening a saved project, then set the CheckBox text to the className that the user saved
+            String className = this.projectManager.getProject().getUmlList().get(classPosition).getClassName();
+            aClassCheckBox.setText(className);
+        }
         classList.addView(aClass);
-        projectManager.addCheckBox(aClassCheckBox);
+        projectManager.addCheckBox(aClassCheckBox, isNewProject);
+
+
+    }
+
+    /**
+     * This method is used when a saved project is being opened to set
+     * the project name.
+     */
+    public void setProjectName(){
+        EditText projectName = (EditText) findViewById(R.id.projectName);
+        projectName.setText(this.projectManager.getProject().getProjectName());
 
     }
 

@@ -1,5 +1,6 @@
 package project;
 
+import java.io.Serializable;
 import java.util.List;
 
 import uml_components.IUML;
@@ -12,7 +13,7 @@ import uml_components.UML;
  * eg: IProject aProject = new Project();
  *
  */
-public interface IProject {
+public interface IProject{
 	public List<IUML> getUmlList();
 
 	public void setUmlList(List<IUML> umlList);
