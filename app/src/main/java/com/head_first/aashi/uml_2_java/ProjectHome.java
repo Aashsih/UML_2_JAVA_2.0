@@ -36,6 +36,7 @@ public class ProjectHome extends AppCompatActivity {
     private Button startP;
     private Button openP;
     private List<String> fileNames;
+    private Spinner projectList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class ProjectHome extends AppCompatActivity {
         }
     }
     private void setupSavedProjectList(){
-        Spinner projectList = (Spinner)findViewById(R.id.projectList);
+        projectList = (Spinner)findViewById(R.id.projectList);
         projectList.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, this.fileNames));
         projectList.setSelection(this.fileNames.size() - 1);
         projectList.setVisibility(View.VISIBLE);
@@ -101,9 +102,10 @@ public class ProjectHome extends AppCompatActivity {
                                 new File(getApplicationContext().getFilesDir().getAbsolutePath() + "/" + ProjectHome.this.fileNames.get(position))));//open the first file for testing
                         Intent savedProject = new Intent(ProjectHome.this, ProjectViewer.class);
                         savedProject.putExtra("hello",(Project) objectInputStream.readObject());//read and pass the Project object to the ProjectViewer Activity
+                        ProjectHome.this.projectList.setVisibility(View.INVISIBLE);
+                        objectInputStream.close();
                         startActivity(savedProject);
 
-                        objectInputStream.close();
                     }
 
                 }
