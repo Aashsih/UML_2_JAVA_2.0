@@ -70,48 +70,13 @@ public class ProjectHome extends AppCompatActivity {
                 }
             }
             this.fileNames = fileNames;
-            this.fileNames.add("None");
-            Spinner projectList = (Spinner)findViewById(R.id.projectList);
-            projectList.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, this.fileNames));
-            projectList.setSelection(this.fileNames.size() - 1);
-            projectList.setVisibility(View.VISIBLE);
-            projectList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    try{
-                        if(position != ProjectHome.this.fileNames.size() - 1){
-                            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(
-                                    new File(getApplicationContext().getFilesDir().getAbsolutePath() + "/" + ProjectHome.this.fileNames.get(position))));//open the first file for testing
-                            Intent savedProject = new Intent(ProjectHome.this, ProjectViewer.class);
-                            savedProject.putExtra("hello",(Project) objectInputStream.readObject());//read and pass the Project object to the ProjectViewer Activity
-                            startActivity(savedProject);
-
-                            objectInputStream.close();
-                        }
-
-                    }
-                    catch(FileNotFoundException fnfe){
-                        fnfe.printStackTrace();
-                    }
-                    catch (IOException ioe){
-                        ioe.printStackTrace();
-                    }
-                    catch (ClassNotFoundException cnfe){
-                        cnfe.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
-
-
-
-
-
+            if(fileNames.size() == 0){
+                this.fileNames.add("None");
+            }
+            else{
+                this.fileNames.add("Select a Project");
+            }
+            setupSavedProjectList();
 
             //We can read the file as Bytes from a String or use Gson and shared preference to read the file as a UML Project object.
             //This feature is not part of Sprint0 hence the methods will be discussed with the Scrum Master & the team before finalising
@@ -121,6 +86,43 @@ public class ProjectHome extends AppCompatActivity {
 //            String json = mPrefs.getString("MyObjectName", "");
 //            Project object = gson.fromJson(json, Project.class);   This Class has already been defined under main->src
         }
+    }
+    private void setupSavedProjectList(){
+        Spinner projectList = (Spinner)findViewById(R.id.projectList);
+        projectList.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, this.fileNames));
+        projectList.setSelection(this.fileNames.size() - 1);
+        projectList.setVisibility(View.VISIBLE);
+        projectList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try{
+                    if(position != ProjectHome.this.fileNames.size() - 1){
+                        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(
+                                new File(getApplicationContext().getFilesDir().getAbsolutePath() + "/" + ProjectHome.this.fileNames.get(position))));//open the first file for testing
+                        Intent savedProject = new Intent(ProjectHome.this, ProjectViewer.class);
+                        savedProject.putExtra("hello",(Project) objectInputStream.readObject());//read and pass the Project object to the ProjectViewer Activity
+                        startActivity(savedProject);
+
+                        objectInputStream.close();
+                    }
+
+                }
+                catch(FileNotFoundException fnfe){
+                    fnfe.printStackTrace();
+                }
+                catch (IOException ioe){
+                    ioe.printStackTrace();
+                }
+                catch (ClassNotFoundException cnfe){
+                    cnfe.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 }
