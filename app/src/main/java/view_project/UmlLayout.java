@@ -162,11 +162,11 @@ public class UmlLayout extends Fragment {
 
         return rootView;
     }
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-    }
+//    @Override
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//
+//    }
     @Override
     public void onStart(){
         super.onStart();

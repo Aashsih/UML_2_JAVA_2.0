@@ -82,6 +82,7 @@ public class ConvertToJava {
                 classTypeInformation.append("class " + uml.getClassName() + "{\n");
                 break;
             }
+//
 //            case INTERFACE:
 //            {
 //                classTypeInformation.append("interface" + uml.getClassName() + "{\n");
@@ -107,7 +108,7 @@ public class ConvertToJava {
     private final StringBuilder getFieldsCode(List<IVariable> fields){
         StringBuilder fieldCode = new StringBuilder();
 
-        for(IVariable field : fields){//for all fields
+        for(IVariable field : fields){
             fieldCode.append("\t" + getAccessModifier(field.getAccessModifier()));//indent and get AccessModifier
             fieldCode.append(isStatic(field.isStatic()));//append "static" if the field is static
             fieldCode.append(isFinal(field.isFinal()));//append "final" if the field is final

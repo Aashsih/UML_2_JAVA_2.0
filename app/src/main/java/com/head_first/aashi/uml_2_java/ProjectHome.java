@@ -48,6 +48,9 @@ public class ProjectHome extends AppCompatActivity {
    //Handle the Start Project Button
    protected void onStartProject(View v){
        if(v.getId()==R.id.startProject){
+           if(this.projectList != null){
+               this.projectList.setVisibility(View.INVISIBLE);
+           }
            Intent projectNew = new Intent(this, ProjectViewer.class);
            startActivity(projectNew);
        }
