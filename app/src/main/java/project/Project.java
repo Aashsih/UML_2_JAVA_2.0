@@ -16,6 +16,8 @@ import uml_components.UML;
  * This class should only be used through its interface : IProject
  */
 public class Project implements Serializable, IProject{
+	public static final String PROJECT_TAG = "PROJECT";
+
 	private List<IUML> umlList;
 	private String projectName;
 

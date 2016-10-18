@@ -23,6 +23,7 @@ import java.io.OutputStreamWriter;
 import java.util.List;
 
 import project.IProject;
+import project.Project;
 import uml_components.IUML;
 import uml_to_java.ConvertToJava;
 
@@ -57,7 +58,7 @@ public class ProjectViewer extends AppCompatActivity {
         drawerListener.syncState();
 
         //Get the project that the user selected to be opened in the ProjectHome activity
-        IProject currentProject = (IProject)getIntent().getSerializableExtra("hello");
+        IProject currentProject = (IProject)getIntent().getSerializableExtra(Project.PROJECT_TAG);
         this.projectManager = new ProjectLayoutManager(currentProject,this);
         this.setupProject(this);
 
