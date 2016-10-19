@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/customborder">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/fieldAccessModifierTemplate"
+            android:padding="5dp"
+            android:layout_weight="0.35"
+            android:layout_gravity="center_vertical" />
+        <HorizontalScrollView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.45"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/fieldName"
+                android:id="@+id/varNameTemplate"
+                android:layout_gravity="center_vertical"
+
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_weight="0.45" />
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=":"
+            android:id="@+id/textViewTemplate"
+            android:layout_gravity="center_vertical"
+            android:padding="5dp"
+            android:layout_weight="0.1" />
+        <HorizontalScrollView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.45"
+            android:layout_gravity="center_vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/dataType"
+                android:id="@+id/dataTypeTemplate"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_weight="1" />
+
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>
