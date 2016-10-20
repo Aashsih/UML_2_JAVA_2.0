@@ -42,6 +42,7 @@ public class UmlLayout extends Fragment {
 
     //Root View for the fragment
     private View rootView;
+
     //List of Fields in a class
     private List<FieldLayout> fieldLayouts;
     //List of Methods in a class
@@ -161,11 +162,11 @@ public class UmlLayout extends Fragment {
 
         return rootView;
     }
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-    }
+//    @Override
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//
+//    }
     @Override
     public void onStart(){
         super.onStart();
@@ -352,6 +353,16 @@ public class UmlLayout extends Fragment {
     //Set the position of this Uml Diagram in the project
     public final void setClassPositionInProject(int position){
         this.classPositionInProject = position;
+    }
+
+    public final List<FieldLayout> getFieldLayouts(){
+
+        return fieldLayouts;
+    }
+
+    public final List<MethodLayout> getMethodLayouts(){
+
+        return methodLayouts;
     }
 
 

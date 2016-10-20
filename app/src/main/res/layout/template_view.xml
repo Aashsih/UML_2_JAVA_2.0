@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/umlLayout">
+    android:id="@+id/template_layout">
 
     <LinearLayout
         android:orientation="vertical"
@@ -11,34 +11,27 @@
         android:background="#cecdcd">
         android:id="@string/classInfo"
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:hint="List package names here"
-            android:id="@+id/importStatements"
-            android:background="#FFFFFF" />
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="30dp">
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/className"
-                android:id="@+id/className"
+                android:id="@+id/classNameTemplate"
                 android:background="#cecdcd"
                 android:layout_gravity="center_horizontal" />
 
 
         </HorizontalScrollView>
 
-        <Spinner
+        <TextView
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="42dp"
             android:text="@string/classType"
-            android:id="@+id/classType"
+            android:id="@+id/classTypeTemplate"
             android:layout_gravity="center_horizontal"
             android:textSize="10sp"
             android:textAlignment="center" />
@@ -52,7 +45,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:id="@+id/scrollView"
+        android:id="@+id/scrollViewTemplate"
         android:fillViewport="false"
         android:layout_weight="10">
 
@@ -61,7 +54,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/UML_Layout">
+            android:id="@+id/UML_LayoutTemplate">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -73,14 +66,10 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/fields"></LinearLayout>
+                    android:id="@+id/fieldsTemplate"></LinearLayout>
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/addField"
-                    android:id="@+id/addField"
-                    android:layout_weight="1" />
+                <!--write text here-->
+
 
             </LinearLayout>
 
@@ -88,23 +77,17 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Methods">
+                android:id="@+id/MethodsTemplate">
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/methods">
+                    android:id="@+id/methodsTemplate">
 
 
                 </LinearLayout>
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/addMethod"
-                    android:id="@+id/addMethod"
-                    android:layout_weight="1" />
             </LinearLayout>
 
         </LinearLayout>
@@ -118,13 +101,6 @@
         android:layout_weight="1"
         android:weightSum="1">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/saveClass"
-            android:id="@+id/saveClass"
-            android:layout_gravity="bottom"
-            android:layout_weight="1" />
 
     </LinearLayout>
 

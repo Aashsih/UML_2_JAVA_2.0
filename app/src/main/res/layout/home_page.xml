@@ -31,4 +31,12 @@
         android:onClick="onOpenProject"
         android:nestedScrollingEnabled="false"
         android:clickable="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/projectList"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true"
+        android:visibility="invisible" />
 </LinearLayout>

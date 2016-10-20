@@ -2,39 +2,28 @@ package view_project;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.head_first.aashi.uml_2_java.R;
 
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
 import project.IProject;
+import project.Project;
 import uml_components.IUML;
 import uml_to_java.ConvertToJava;
 
@@ -60,13 +49,19 @@ public class ProjectViewer extends AppCompatActivity {
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         DrawerLayout slidingMenu = (DrawerLayout)findViewById(R.id.drawerLayout);
-        slidingMenu.openDrawer(Gravity.LEFT);
+        //slidingMenu.openDrawer(Gravity.LEFT);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
 
         drawerListener = new ActionBarDrawerToggle(this, drawerLayout,
                 R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(drawerListener);
         drawerListener.syncState();
+
+        //Get the project that the user selected to be opened in the ProjectHome activity
+        IProject currentProject = (IProject)getIntent().getSerializableExtra(Project.PROJECT_TAG);
+        this.projectManager = new ProjectLayoutManager(currentProject,this);
+        this.setupProject(this);
+
     }
 
     @Override
@@ -77,13 +72,33 @@ public class ProjectViewer extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-            finish();
-        }
-        else{
-            drawerLayout.openDrawer(Gravity.LEFT);
-        }
+        super.onBackPressed();
+        ((LinearLayout)findViewById(R.id.projectPageLayout)).setVisibility(View.VISIBLE);
+    }
 
+//    private final Fragment getActiveFragment(){
+//        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+//        if(fragments != null){
+//            for(Fragment fragment : fragments){
+//                if(fragment != null && fragment.isVisible())
+//                    return fragment;
+//            }
+//        }
+//        return null;
+//    }
+
+    /**
+     *  Helper Method
+     * When a saved Project is opened by a user this method is used to setup the
+     * layout of the ProjectViewer class and also setup the data in this class
+     */
+    public void setupProject(ProjectViewer currentProjectView){
+        currentProjectView.setProjectName();
+        for(int i = 0; i < this.projectManager.getProject().getUmlList().size(); i++){
+
+            currentProjectView.setupCheckBoxForAClass(false, i);//Create and setup a checkbox with the correct class name, then add it to the SlidingMenu
+
+        }
     }
     /**
      *
@@ -92,13 +107,41 @@ public class ProjectViewer extends AppCompatActivity {
      * 2. Initializes The UmlLayout (Fragment) for the class
      */
     public void addClass(View view){
+        setupCheckBoxForAClass(true,0);
+    }
+
+    /**
+     * This method adds a CheckBox to the Sliding Menu of the project.
+     * @param isNewProject is used to tell the method if a new CheckBox needs to be setup in a new Project
+     *                     or if a new CheckBox needs to be setUp from a saved project
+     * @param classPosition specifies the position of the class in the ProjectLayoutManager umlList to get the correct classs name
+     */
+    public void setupCheckBoxForAClass(boolean isNewProject, int classPosition){
         LinearLayout classList = (LinearLayout) findViewById(R.id.classList);
         View aClass = getLayoutInflater().inflate(R.layout.classname,null);
         CheckBox aClassCheckBox = (CheckBox)aClass.findViewById(R.id.checkBox);
         aClassCheckBox.setId(projectManager.getClassList().size());
-        aClassCheckBox.setText("Class" + (projectManager.getClassList().size() + 1));
+        if(isNewProject){//if a new project, setup a default check box with standard Class Name
+            aClassCheckBox.setText("Class " + this.projectManager.getClassId());
+        }
+        else{
+            //if opening a saved project, then set the CheckBox text to the className that the user saved
+            String className = this.projectManager.getProject().getUmlList().get(classPosition).getClassName();
+            aClassCheckBox.setText(className);
+        }
         classList.addView(aClass);
-        projectManager.addCheckBox(aClassCheckBox);
+        projectManager.addCheckBox(aClassCheckBox, isNewProject);
+
+
+    }
+
+    /**
+     * This method is used when a saved project is being opened to set
+     * the project name.
+     */
+    public final void setProjectName(){
+        EditText projectName = (EditText) findViewById(R.id.projectName);
+        projectName.setText(this.projectManager.getProject().getProjectName());
 
     }
 
@@ -122,7 +165,8 @@ public class ProjectViewer extends AppCompatActivity {
                 UmlLayout umlLayout = projectManager.getUmlFragment(indexOfClass);
 
                 //Replace the old Fragment with the selected UmlLayout Fragment
-                aTransaction.replace(R.id.frameLayout,umlLayout);
+                aTransaction.replace(R.id.projectPage,umlLayout);
+                ((LinearLayout)findViewById(R.id.projectPageLayout)).setVisibility(View.INVISIBLE);
                 aTransaction.addToBackStack(null);
                 aTransaction.commit();
                 drawerLayout.closeDrawers();//Close the Sliding Menu
@@ -175,18 +219,24 @@ public class ProjectViewer extends AppCompatActivity {
     public void onSaveProject(View v){
 
         if(v.getId()==R.id.saveProject){
-            IProject currentProject = this.projectManager.getProject();
-            currentProject.setProjectName(((EditText)findViewById(R.id.projectName)).getText().toString());
-            try {
-                String fileName = currentProject.getProjectName() + ".ser";
-                FileOutputStream fileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-                objectOutputStream.writeObject(currentProject);
-                objectOutputStream.close();
-                fileOutputStream.close();
-                Toast.makeText(this,"Project Saved", Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                e.printStackTrace();
+            if(this.projectManager.getProject() == null){
+                Toast.makeText(this,"Nothing to save",Toast.LENGTH_SHORT).show();
+            }
+            else{
+                IProject currentProject = this.projectManager.getProject();
+                currentProject.setProjectName(((EditText)findViewById(R.id.projectName)).getText().toString());
+                try {
+                    String fileName = currentProject.getProjectName() + ".ser";
+                    FileOutputStream fileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                    objectOutputStream.writeObject(currentProject);
+                    objectOutputStream.close();
+                    fileOutputStream.close();
+                    Toast.makeText(this,"Project Saved", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
 
 //            Other Method
@@ -240,6 +290,24 @@ public class ProjectViewer extends AppCompatActivity {
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
         Toast.makeText(getApplicationContext(),"File Saved Successfully", Toast.LENGTH_LONG).show();
 
+
+    }
+
+    public void deleteSelectedClasses(View view){
+        List<CheckBox> selectedClasses = this.projectManager.getCheckedCheckBoxes();
+        if(selectedClasses.size() == 0){
+            Toast.makeText(this, "No Class Selected", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            for(CheckBox aClass : selectedClasses){
+                int indexOfClass = projectManager.getClassList().indexOf(aClass);
+                aClass.setVisibility(View.GONE);
+                ((LinearLayout) findViewById(R.id.classList)).removeView(aClass);
+                this.projectManager.getProject().getUmlList().remove(indexOfClass);
+                this.projectManager.getClassList().remove(indexOfClass);
+                this.projectManager.deleteUMLFragment(indexOfClass);
+            }
+        }
 
     }
     //get ProjectLayout Manager

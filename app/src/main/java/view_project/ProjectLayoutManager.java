@@ -25,6 +25,8 @@ import uml_components.UML;
  * for all creating, storing and editing option
  */
 public class ProjectLayoutManager {
+    private int CLASS_ID;
+
     //Abstraction
     private IProject project;
 
@@ -32,20 +34,33 @@ public class ProjectLayoutManager {
     private List<CheckBox> classList = null;//Stores CheckBox references for all the Classes created in the current project
     private List<UmlLayout> umlFragments = null;//Stores all the Fragments of type UmlLayout
     public ProjectLayoutManager(){
+        CLASS_ID  = 1;
         project = new Project();
         classList = new ArrayList<>();
         umlFragments = new ArrayList<>();
+    }
+
+    //This costructor should be used i
+    public ProjectLayoutManager(IProject openedProject, ProjectViewer currentProjectView){
+        this();
+        if(openedProject != null) {//Verify if the user opened a new project
+            project = openedProject;
+        }
+
     }
 
     /**
      * This class adds a checkbox for each Class that the user creates.
      *
      */
-    public final void addCheckBox(CheckBox checkBox){
-        //CLASS_ID++;
+    public final void addCheckBox(CheckBox checkBox, boolean isNewProject){
+        CLASS_ID++;
         this.classList.add(checkBox);//Store the CheckBox reference
-        this.project.getUmlList().add(new UML());//add a new UML Class to the project to be stored
         this.umlFragments.add(new UmlLayout());//Create the UmlLayout Fragment to be displayed
+        if(isNewProject){
+            this.project.getUmlList().add(new UML());//add a new UML Class to the project to be stored
+        }
+
 
     }
 
@@ -76,13 +91,17 @@ public class ProjectLayoutManager {
         return classList;
     }
 
-//    public final int getClassId(){
-//        return CLASS_ID;
-//    }
+    public final int getClassId(){
+        return CLASS_ID;
+    }
 
     public final UmlLayout getUmlFragment(int position){
 
         return this.umlFragments.get(position);
+    }
+
+    public final boolean deleteUMLFragment(int position){
+        return this.umlFragments.remove(position) != null;
     }
 
 
