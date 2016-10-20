@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.head_first.aashi.uml_2_java.R;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
@@ -38,7 +39,7 @@ public class ProjectViewer extends AppCompatActivity {
 
     //Communicates between the UI components and the Project
     private ProjectLayoutManager projectManager = new ProjectLayoutManager();
-
+    private boolean fileSaved;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerListener;
 
@@ -233,24 +234,56 @@ public class ProjectViewer extends AppCompatActivity {
                     objectOutputStream.close();
                     fileOutputStream.close();
                     Toast.makeText(this,"Project Saved", Toast.LENGTH_SHORT).show();
+                    fileSaved = true;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }
 
-//            Other Method
-//            SharedPreferences myPreferns = getPreferences(MODE_PRIVATE);
-//
-//            Editor prefsEditor = myPreferns.edit();
-//            Gson gson = new Gson();
-//            String json = gson.toJson(myObject); // myObject
-//            prefsEditor.putString("MyObject", json);
-//            prefsEditor.commit();
 
         }
     }
 
+
+    /**
+     * This method executes the  Delete Project button from the Sliding Menu.
+     * The method first searches for the Project file in the internal storage
+     *  and if found it is deleted.
+     */
+    public void onSaveProject(View v){
+
+        if(v.getId()==R.id.deleteProject){
+            if(this.projectManager.getProject() == null){
+                Toast.makeText(this,"Project was not Saved",Toast.LENGTH_SHORT).show();
+            }
+            else{
+                IProject currentProject = this.projectManager.getProject();
+                String fileName = currentProject.getProjectName();
+                if(!fileName.isEmpty()){
+
+                    try {
+                        fileName = currentProject.getProjectName() + ".ser";
+                        File dir = getApplicationContext().getFilesDir();
+                        File file = new File(dir, fileName);
+                        boolean deleted = file.delete();
+                        if(deleted){Toast.makeText(this,"Project Deleted", Toast.LENGTH_SHORT).show();}
+                        else{Toast.makeText(this,"Project was not found", Toast.LENGTH_SHORT).show();}
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                else{
+                    Toast.makeText(this,"Project was not Saved",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+
+        }
+    }
     /**
      * This method is executed when the Conver To Java button from the Sliding Menu is Clicked.
      * This Methods converts the current state of the Project into Java code which is
