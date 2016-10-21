@@ -90,9 +90,7 @@ public class UmlLayout extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        //Initialize the fields and methods for the class
-        fieldLayouts = new ArrayList<>();
-        methodLayouts = new ArrayList<>();
+
 
     }
 
@@ -282,6 +280,9 @@ public class UmlLayout extends Fragment {
         LinearLayout fields = (LinearLayout) rootView.findViewById(R.id.fields);
         //Layout where the method_layout is inflated
         LinearLayout methods = (LinearLayout) rootView.findViewById(R.id.methods);
+
+        fieldLayouts = new ArrayList<>();
+        methodLayouts = new ArrayList<>();
 
         for (IVariable field : uml.getVariableList()) {//for all the fields stored for this class
             //Inflate the field_layout
