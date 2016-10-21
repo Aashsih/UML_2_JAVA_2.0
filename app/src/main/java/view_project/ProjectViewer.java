@@ -28,6 +28,8 @@ import project.Project;
 import uml_components.IUML;
 import uml_to_java.ConvertToJava;
 
+import static com.head_first.aashi.uml_2_java.R.id.umlLayout;
+
 /**
  * This class contains the Project Activity.
  * This Activity (DrawerLayout) will start of to be empty if a new Project is created or
@@ -187,6 +189,45 @@ public class ProjectViewer extends AppCompatActivity {
         }
     }
 
+    public void viewClass(View view){
+
+        List<CheckBox> selectedClasses = projectManager.getCheckedCheckBoxes();
+
+        switch(selectedClasses.size()){
+
+            case 0: break; //If no classes are selected
+            case 1: //If one class is selected, allow the user to editClass the class (UmlLayout Fragment)
+            {
+                //when only one class needs to be viewed
+                FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
+                //get index of the selected class
+                int indexOfClass = projectManager.getClassList().indexOf(selectedClasses.get(0));
+                //Get the fragment that needs to be Viewed
+                TemplateLayout templateLayout = projectManager.getTemplateFragment(indexOfClass);
+                // UmlLayout umlLayout = projectManager.getUmlFragment(indexOfClass);
+
+                //Replace the old Fragment with the selected UmlLayout Fragment
+                aTransaction.replace(R.id.projectPage,templateLayout);
+                ((LinearLayout)findViewById(R.id.projectPageLayout)).setVisibility(View.INVISIBLE);
+                aTransaction.addToBackStack(null);
+                aTransaction.commit();
+                drawerLayout.closeDrawers();//Close the Sliding Menu
+//                //Pass the index of the selected class to the UmlLayout
+//                umlLayout.setClassPositionInProject(indexOfClass);
+                //If the Fragment has a saved state then restore it
+                if(projectManager.getProject().getUmlList().size() > indexOfClass){
+                    templateLayout.setUml(projectManager.getProject().getUmlList().get(indexOfClass));
+
+                }
+
+            }
+            default:
+            {
+                //this is where multiple classes will be viewed together
+            }
+        }
+    }
+
     /**
      *
      * This method is executed when the user clicks on the Select All button from the SlidingMenu.
@@ -320,9 +361,7 @@ public class ProjectViewer extends AppCompatActivity {
 
 
     }
-    public void viewClass(View view){
 
-    }
     public void deleteSelectedClasses(View view){
         List<CheckBox> selectedClasses = this.projectManager.getCheckedCheckBoxes();
         if(selectedClasses.size() == 0){
