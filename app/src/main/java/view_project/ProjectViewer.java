@@ -251,7 +251,7 @@ public class ProjectViewer extends AppCompatActivity {
      * The method first searches for the Project file in the internal storage
      *  and if found it is deleted.
      */
-    public void onSaveProject(View v){
+    public void onDeleteProject(View v){
 
         if(v.getId()==R.id.deleteProject){
             if(this.projectManager.getProject() == null){

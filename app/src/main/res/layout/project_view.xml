@@ -67,7 +67,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="deleteProject"
+                    android:text="Delete Project"
                     android:id="@+id/deleteProject"
                     android:clickable="true"
                     android:onClick="onDeleteProject"
