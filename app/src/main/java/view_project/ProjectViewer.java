@@ -254,16 +254,12 @@ public class ProjectViewer extends AppCompatActivity {
     public void onDeleteProject(View v){
 
         if(v.getId()==R.id.deleteProject){
-            if(this.projectManager.getProject() == null){
-                Toast.makeText(this,"Project was not Saved",Toast.LENGTH_SHORT).show();
-            }
-            else{
-                IProject currentProject = this.projectManager.getProject();
-                String fileName = currentProject.getProjectName();
+
+                String fileName = (EditText)findViewById(R.id.projectName).getText().toString();
                 if(!fileName.isEmpty()){
 
                     try {
-                        fileName = currentProject.getProjectName() + ".ser";
+                        fileName = fileName + ".ser";
                         File dir = getApplicationContext().getFilesDir();
                         File file = new File(dir, fileName);
                         boolean deleted = file.delete();
@@ -276,7 +272,7 @@ public class ProjectViewer extends AppCompatActivity {
 
                 }
                 else{
-                    Toast.makeText(this,"Project was not Saved",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"Project does not have a valid name",Toast.LENGTH_SHORT).show();
                 }
             }
 
