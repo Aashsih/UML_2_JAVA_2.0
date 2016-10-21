@@ -35,7 +35,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/methodName"
                     android:id="@+id/methodName"
-
+                    android:textColor="#076e0d"
                     android:gravity="center" />
 
                 <TextView
@@ -53,7 +53,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/parameters"
                     android:id="@+id/parameters"
-
+                    android:textColor="#e157b3"
                     android:gravity="center" />
 
                 <TextView
@@ -91,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="returnType"
+                android:textColor="#ffa200"
                 android:id="@+id/returnType"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"

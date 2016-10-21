@@ -33,11 +33,13 @@ public class ProjectLayoutManager {
     //Navigation VIew -- Control
     private List<CheckBox> classList = null;//Stores CheckBox references for all the Classes created in the current project
     private List<UmlLayout> umlFragments = null;//Stores all the Fragments of type UmlLayout
+    private List<TemplateLayout> templateLayouts = null; //Stores all the Fragments of type TemplateLayout
     public ProjectLayoutManager(){
         CLASS_ID  = 1;
         project = new Project();
         classList = new ArrayList<>();
         umlFragments = new ArrayList<>();
+        templateLayouts = new ArrayList<>();
     }
 
     //This costructor should be used i
@@ -57,6 +59,7 @@ public class ProjectLayoutManager {
         CLASS_ID++;
         this.classList.add(checkBox);//Store the CheckBox reference
         this.umlFragments.add(new UmlLayout());//Create the UmlLayout Fragment to be displayed
+        this.templateLayouts.add(new TemplateLayout());
         if(isNewProject){
             this.project.getUmlList().add(new UML());//add a new UML Class to the project to be stored
         }
@@ -99,6 +102,12 @@ public class ProjectLayoutManager {
 
         return this.umlFragments.get(position);
     }
+
+    public final TemplateLayout getTemplateFragment(int position){
+
+        return this.templateLayouts.get(position);
+    }
+
 
     public final boolean deleteUMLFragment(int position){
         return this.umlFragments.remove(position) != null;

@@ -1,6 +1,6 @@
 package view_project;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -197,41 +197,55 @@ public class TemplateLayout extends Fragment{
 
         className.setText(uml.getClassName());
 
-        for(IVariable afield : uml.getVariableList()){
+        for(IVariable aField : uml.getVariableList()){
 
             LinearLayout fields = (LinearLayout) rootView.findViewById(R.id.fieldsTemplate);
-            View field = getActivity().getLayoutInflater().inflate(R.layout.field_layout_template, null);
-            addFieldLayout(field);
-            fields.addView(field);
+            View fieldLayout = getActivity().getLayoutInflater().inflate(R.layout.field_layout_template, null);
+            addFieldLayout(fieldLayout, aField);
+            fields.addView(fieldLayout);
 
         }
 
-        for(IMethod amethod : uml.getMethodList()){
+        for(IMethod aMethod : uml.getMethodList()){
 
             LinearLayout methods = (LinearLayout) rootView.findViewById(R.id.methodsTemplate);
-            View method = getActivity().getLayoutInflater().inflate(R.layout.method_layout_template, null);
-            intialiseMethodLayout(method);
-            methods.addView(method);
+            View methodLayout = getActivity().getLayoutInflater().inflate(R.layout.method_layout_template, null);
+            intialiseMethodLayout(methodLayout, aMethod);
+            methods.addView(methodLayout);
 
         }
 
         return rootView;
     }
 
-    private void addFieldLayout(View field){
-        TextView fieldAccessModifier = (TextView)field.findViewById(R.id.fieldAccessModifierTemplate);
-        TextView fieldName = (TextView)field.findViewById(R.id.varNameTemplate);
-        TextView dataType = (TextView)field.findViewById(R.id.dataTypeTemplate);;
-        FieldLayoutTemplate fieldLayout = new FieldLayoutTemplate(fieldAccessModifier,fieldName,dataType);
-        fieldLayouts.add(fieldLayout);
+    private void addFieldLayout(View fieldLayout, IVariable aField){
+        TextView fieldAccessModifier = (TextView)fieldLayout.findViewById(R.id.fieldAccessModifierTemplate);
+        fieldAccessModifier.setText(aField.getAccessModifier().getSymbol());
+
+        TextView fieldName = (TextView)fieldLayout.findViewById(R.id.varNameTemplate);
+        fieldName.setText(aField.getVarName());
+
+        TextView dataType = (TextView)fieldLayout.findViewById(R.id.dataTypeTemplate);;
+        dataType.setText(aField.getType());
+
+        FieldLayoutTemplate fieldLayoutTemplate = new FieldLayoutTemplate(fieldAccessModifier,fieldName,dataType);
+        fieldLayouts.add(fieldLayoutTemplate);
     }
 
-    private void intialiseMethodLayout(View method){
+    private void intialiseMethodLayout(View method, IMethod aMethod){
 
         TextView methodAccessModifier = (TextView)method.findViewById(R.id.methodAccessModifierTemplate);
+        methodAccessModifier.setText(aMethod.getAccessModifier().getSymbol());
+
         TextView methodName = (TextView) method.findViewById(R.id.methodNameTemplate);
+        methodName.setText(aMethod.getMethodName());
+
         TextView parameters = (TextView) method.findViewById(R.id.parametersTemplate);
+        parameters.setText(aMethod.getParameters());
+
         TextView returnType = (TextView) method.findViewById(R.id.returnTypeTemplate);
+        returnType.setText(aMethod.getReturnType());
+
         MethodLayoutTemplate methodLayout = new MethodLayoutTemplate(methodAccessModifier, methodName, parameters, returnType);
         methodLayouts.add(methodLayout);
     }

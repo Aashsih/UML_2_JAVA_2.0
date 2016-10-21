@@ -68,7 +68,6 @@
                     android:layout_height="match_parent"
                     android:id="@+id/fieldsTemplate"></LinearLayout>
 
-                <!--write text here-->
 
 
             </LinearLayout>
