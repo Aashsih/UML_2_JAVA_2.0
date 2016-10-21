@@ -15,7 +15,7 @@ import project.IProject;
 import project.Project;
 
 /**
- * This will be the project page where the user can start adding classes and edit/save changes
+ * This will be the project page where the user can start adding classes and editClass/save changes
  * Created by moses on 18/09/2016.
  */
 public class ProjectPage extends Activity {
@@ -72,7 +72,7 @@ public class ProjectPage extends Activity {
 //            Other Method (To be finalised by the team in next Sprint)
 //            SharedPreferences myPreferns = getPreferences(MODE_PRIVATE);
 //
-//            Editor prefsEditor = myPreferns.edit();
+//            Editor prefsEditor = myPreferns.editClass();
 //            Gson gson = new Gson();
 //            String json = gson.toJson(myObject); // myObject
 //            prefsEditor.putString("MyObject", json);

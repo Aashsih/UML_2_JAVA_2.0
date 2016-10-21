@@ -34,6 +34,7 @@
     <string name="convertToJava">Share Code</string>
     <string name="selectAll">Select All</string>
     <string name="deselectAll">Deselect All</string>
+    <string name="editClass">Edit</string>
     <string name="viewClass">View</string>
 
     <string name="title_activity_project_viewer_test">ProjectViewerTest</string>

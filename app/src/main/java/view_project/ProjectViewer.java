@@ -150,13 +150,13 @@ public class ProjectViewer extends AppCompatActivity {
      * This method is called when the View button from the Sliding Menu is clicked.
      *
      */
-    public void viewClass(View view){
+    public void editClass(View view){
         //Get List of classes that the user has selected in the SlidingMenu
         List<CheckBox> selectedClasses = projectManager.getCheckedCheckBoxes();
 
         switch(selectedClasses.size()){
             case 0: break; //If no classes are selected
-            case 1: //If one class is selected, allow the user to edit the class (UmlLayout Fragment)
+            case 1: //If one class is selected, allow the user to editClass the class (UmlLayout Fragment)
             {
                 //when only one class needs to be viewed
                 FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
@@ -255,7 +255,7 @@ public class ProjectViewer extends AppCompatActivity {
 
         if(v.getId()==R.id.deleteProject){
 
-                String fileName = (EditText)findViewById(R.id.projectName).getText().toString();
+                String fileName = ((EditText)findViewById(R.id.projectName)).getText().toString();
                 if(!fileName.isEmpty()){
 
                     try {
@@ -279,7 +279,6 @@ public class ProjectViewer extends AppCompatActivity {
 
 
         }
-    }
     /**
      * This method is executed when the Conver To Java button from the Sliding Menu is Clicked.
      * This Methods converts the current state of the Project into Java code which is
@@ -321,7 +320,9 @@ public class ProjectViewer extends AppCompatActivity {
 
 
     }
+    public void viewClass(View view){
 
+    }
     public void deleteSelectedClasses(View view){
         List<CheckBox> selectedClasses = this.projectManager.getCheckedCheckBoxes();
         if(selectedClasses.size() == 0){

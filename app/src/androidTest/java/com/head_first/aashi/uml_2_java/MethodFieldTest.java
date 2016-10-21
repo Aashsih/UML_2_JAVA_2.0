@@ -2,38 +2,25 @@ package com.head_first.aashi.uml_2_java;
 
         import org.hamcrest.Description;
         import org.hamcrest.Matcher;
-        import org.hamcrest.Matchers;
         import org.hamcrest.TypeSafeMatcher;
-        import org.junit.Before;
         import org.junit.Rule;
         import org.junit.Test;
         import org.junit.runner.RunWith;
 
-        import android.support.test.espresso.assertion.ViewAssertions;
         import android.support.test.espresso.matcher.ViewMatchers;
         import android.support.test.filters.LargeTest;
         import android.support.test.rule.ActivityTestRule;
         import android.support.test.runner.AndroidJUnit4;
-        import android.text.method.MovementMethod;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.ListView;
         import android.widget.Spinner;
-        import android.widget.SpinnerAdapter;
 
         import static android.support.test.espresso.action.ViewActions.clearText;
         import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-        import static android.support.test.espresso.action.ViewActions.doubleClick;
-        import static android.support.test.espresso.action.ViewActions.scrollTo;
         import static android.support.test.espresso.action.ViewActions.typeText;
         import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
         import static android.support.test.espresso.matcher.ViewMatchers.withText;
         import static junit.framework.Assert.assertEquals;
         import static junit.framework.Assert.assertNotNull;
         import static org.hamcrest.Matchers.is;
-
-        import com.head_first.aashi.uml_2_java.R;
 
         import view_project.ProjectLayoutManager;
         import view_project.ProjectViewer;
@@ -64,7 +51,7 @@ public class MethodFieldTest {
         int currentCheckBox = projectLayoutManager.getClassList().size();
         onView(ViewMatchers.withId(R.id.addClass)).perform(click());
         onView(ViewMatchers.withId(currentCheckBox)).perform(click());
-        onView(ViewMatchers.withId(R.id.viewClass)).perform(click());
+        onView(ViewMatchers.withId(R.id.editClass)).perform(click());
     }
     @Test
     public void isFieldAddedOnClick(){
