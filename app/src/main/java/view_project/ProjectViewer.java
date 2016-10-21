@@ -160,33 +160,39 @@ public class ProjectViewer extends AppCompatActivity {
             case 0: break; //If no classes are selected
             case 1: //If one class is selected, allow the user to editClass the class (UmlLayout Fragment)
             {
-                //when only one class needs to be viewed
-                FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
-                //get index of the selected class
-                int indexOfClass = projectManager.getClassList().indexOf(selectedClasses.get(0));
-                //Get the fragment that needs to be Viewed
-                UmlLayout umlLayout = projectManager.getUmlFragment(indexOfClass);
 
-                //Replace the old Fragment with the selected UmlLayout Fragment
-                aTransaction.replace(R.id.projectPage,umlLayout);
-                ((LinearLayout)findViewById(R.id.projectPageLayout)).setVisibility(View.INVISIBLE);
-                aTransaction.addToBackStack(null);
-                aTransaction.commit();
-                drawerLayout.closeDrawers();//Close the Sliding Menu
-                //Pass the index of the selected class to the UmlLayout
-                umlLayout.setClassPositionInProject(indexOfClass);
-                //If the Fragment has a saved state then restore it
-                if(projectManager.getProject().getUmlList().size() > indexOfClass){
-                    umlLayout.setUML(projectManager.getProject().getUmlList().get(indexOfClass));
-
-                }
-
+                editSingleClass(selectedClasses);
             }
             default:
             {
                 //this is where multiple classes will be viewed together
             }
         }
+    }
+
+    private final void editSingleClass(List<CheckBox> selectedClasses){
+
+        //when only one class needs to be viewed
+        FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
+        //get index of the selected class
+        int indexOfClass = projectManager.getClassList().indexOf(selectedClasses.get(0));
+        //Get the fragment that needs to be Viewed
+        UmlLayout umlLayout = projectManager.getUmlFragment(indexOfClass);
+
+        //Replace the old Fragment with the selected UmlLayout Fragment
+        aTransaction.replace(R.id.projectPage,umlLayout);
+        ((LinearLayout)findViewById(R.id.projectPageLayout)).setVisibility(View.INVISIBLE);
+        aTransaction.addToBackStack(null);
+        aTransaction.commit();
+        drawerLayout.closeDrawers();//Close the Sliding Menu
+        //Pass the index of the selected class to the UmlLayout
+        umlLayout.setClassPositionInProject(indexOfClass);
+        //If the Fragment has a saved state then restore it
+        if(projectManager.getProject().getUmlList().size() > indexOfClass){
+            umlLayout.setUML(projectManager.getProject().getUmlList().get(indexOfClass));
+
+        }
+
     }
 
     public void viewClass(View view){
@@ -198,36 +204,50 @@ public class ProjectViewer extends AppCompatActivity {
             case 0: break; //If no classes are selected
             case 1: //If one class is selected, allow the user to editClass the class (UmlLayout Fragment)
             {
-                //when only one class needs to be viewed
-                FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
-                //get index of the selected class
-                int indexOfClass = projectManager.getClassList().indexOf(selectedClasses.get(0));
-                //Get the fragment that needs to be Viewed
-                TemplateLayout templateLayout = projectManager.getTemplateFragment(indexOfClass);
-                // UmlLayout umlLayout = projectManager.getUmlFragment(indexOfClass);
-
-                //Replace the old Fragment with the selected UmlLayout Fragment
-                aTransaction.replace(R.id.projectPage,templateLayout);
-                ((LinearLayout)findViewById(R.id.projectPageLayout)).setVisibility(View.INVISIBLE);
-                aTransaction.addToBackStack(null);
-                aTransaction.commit();
-                drawerLayout.closeDrawers();//Close the Sliding Menu
-//                //Pass the index of the selected class to the UmlLayout
-//                umlLayout.setClassPositionInProject(indexOfClass);
-                //If the Fragment has a saved state then restore it
-                if(projectManager.getProject().getUmlList().size() > indexOfClass){
-                    templateLayout.setUml(projectManager.getProject().getUmlList().get(indexOfClass));
-
-                }
-
+               viewSingleClass(selectedClasses);
             }
             default:
             {
-                //this is where multiple classes will be viewed together
+
+                viewMultipleClasses(selectedClasses);
             }
         }
     }
 
+    private final void viewMultipleClasses(List<CheckBox> selectedClasses) {
+        int[] indexOfClass = new int[selectedClasses.size()];
+        for(int i = 0; i < selectedClasses.size(); i++){
+            indexOfClass[i] = projectManager.getClassList().indexOf(selectedClasses.get(0));
+        }
+
+
+
+    }
+
+    private final void viewSingleClass(List<CheckBox> selectedClasses){
+        //when only one class needs to be viewed
+        FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
+        //get index of the selected class
+        int indexOfClass = projectManager.getClassList().indexOf(selectedClasses.get(0));
+        //Get the fragment that needs to be Viewed
+        TemplateLayout templateLayout = projectManager.getTemplateFragment(indexOfClass);
+        // UmlLayout umlLayout = projectManager.getUmlFragment(indexOfClass);
+
+        //Replace the old Fragment with the selected UmlLayout Fragment
+        aTransaction.replace(R.id.projectPage,templateLayout);
+        ((LinearLayout)findViewById(R.id.projectPageLayout)).setVisibility(View.INVISIBLE);
+        aTransaction.addToBackStack(null);
+        aTransaction.commit();
+        drawerLayout.closeDrawers();//Close the Sliding Menu
+//                //Pass the index of the selected class to the UmlLayout
+//                umlLayout.setClassPositionInProject(indexOfClass);
+        //If the Fragment has a saved state then restore it
+        if(projectManager.getProject().getUmlList().size() > indexOfClass){
+            templateLayout.setUml(projectManager.getProject().getUmlList().get(indexOfClass));
+
+        }
+
+    }
     /**
      *
      * This method is executed when the user clicks on the Select All button from the SlidingMenu.
