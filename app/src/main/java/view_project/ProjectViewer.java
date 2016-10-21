@@ -264,7 +264,7 @@ public class ProjectViewer extends AppCompatActivity {
                         File file = new File(dir, fileName);
                         boolean deleted = file.delete();
                         if(deleted){Toast.makeText(this,"Project Deleted", Toast.LENGTH_SHORT).show();}
-                        else{Toast.makeText(this,"Project was not found", Toast.LENGTH_SHORT).show();}
+                        else{Toast.makeText(this,"Project has not been saved!", Toast.LENGTH_SHORT).show();}
 
                     } catch (Exception e) {
                         e.printStackTrace();
