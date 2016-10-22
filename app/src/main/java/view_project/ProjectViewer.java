@@ -3,7 +3,8 @@ package view_project;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,14 +22,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.util.List;
 
 import project.IProject;
 import project.Project;
 import uml_components.IUML;
 import uml_to_java.ConvertToJava;
-
-import static com.head_first.aashi.uml_2_java.R.id.umlLayout;
 
 /**
  * This class contains the Project Activity.
@@ -37,10 +37,11 @@ import static com.head_first.aashi.uml_2_java.R.id.umlLayout;
  *
  * Note: This sprint is only limited to saving the user's work
  */
-public class ProjectViewer extends AppCompatActivity {
+public class ProjectViewer extends AppCompatActivity implements  Serializable{
 
     //Communicates between the UI components and the Project
     private ProjectLayoutManager projectManager = new ProjectLayoutManager();
+    private MultipleClassViewer multipleClassViewer = null;
     private boolean fileSaved;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerListener;
@@ -162,10 +163,12 @@ public class ProjectViewer extends AppCompatActivity {
             {
 
                 editSingleClass(selectedClasses);
+                break;
             }
             default:
             {
                 //this is where multiple classes will be viewed together
+                
             }
         }
     }
@@ -205,32 +208,52 @@ public class ProjectViewer extends AppCompatActivity {
             case 1: //If one class is selected, allow the user to editClass the class (UmlLayout Fragment)
             {
                viewSingleClass(selectedClasses);
+                break;
             }
             default:
             {
 
                 viewMultipleClasses(selectedClasses);
+                break;
             }
         }
     }
+    private final void removeChildFragments(){
+        if(multipleClassViewer != null){
+            FragmentManager childFragmentManager = multipleClassViewer.getChildFragmentManager();
+            if(childFragmentManager.popBackStackImmediate()){
+                childFragmentManager.popBackStackImmediate(null, childFragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
+            List<Fragment> fragments = childFragmentManager.getFragments();
+            if(fragments != null){
+                FragmentTransaction aTransaction = childFragmentManager.beginTransaction();
+                for(Fragment aFragment : fragments){
+                    if(aFragment != null)
+                        aTransaction.remove(aFragment);
+                }
+                aTransaction.commit();
 
-    private final void viewMultipleClasses(List<CheckBox> selectedClasses) {
-        int[] indexOfClass = new int[selectedClasses.size()];
-        for(int i = 0; i < selectedClasses.size(); i++){
-            indexOfClass[i] = projectManager.getClassList().indexOf(selectedClasses.get(0));
+            }
+            childFragmentManager.executePendingTransactions();
+            multipleClassViewer = null;
         }
-
-
-
     }
-
     private final void viewSingleClass(List<CheckBox> selectedClasses){
+        removeChildFragments();
+
         //when only one class needs to be viewed
-        FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction aTransaction = fragmentManager.beginTransaction();
         //get index of the selected class
         int indexOfClass = projectManager.getClassList().indexOf(selectedClasses.get(0));
         //Get the fragment that needs to be Viewed
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(TemplateLayout.MATCH_PARENT, true);
+
+        projectManager.setTemplateFragment(indexOfClass,new TemplateLayout());
+
         TemplateLayout templateLayout = projectManager.getTemplateFragment(indexOfClass);
+        templateLayout.setArguments(bundle);
         // UmlLayout umlLayout = projectManager.getUmlFragment(indexOfClass);
 
         //Replace the old Fragment with the selected UmlLayout Fragment
@@ -248,6 +271,43 @@ public class ProjectViewer extends AppCompatActivity {
         }
 
     }
+    private final void removeTemplateLayoutFragments(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if(fragmentManager.popBackStackImmediate()){
+            fragmentManager.popBackStackImmediate(null, fragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if(fragments != null){
+            FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
+            for(Fragment aFragment : fragments){
+                if(aFragment != null)
+                    aTransaction.remove(aFragment);
+            }
+            aTransaction.commit();
+
+        }
+        //fragmentManager.executePendingTransactions();
+    }
+    private final void viewMultipleClasses(List<CheckBox> selectedClasses) {
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ProjectLayoutManager.PROJECT_LAYOUT_MANAGER_TAG, (Serializable) this.projectManager);
+
+        multipleClassViewer = new MultipleClassViewer();
+        multipleClassViewer.setArguments(bundle);
+
+        removeTemplateLayoutFragments();
+        //Replace the old Fragment with the selected UmlLayout Fragment
+        FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
+        aTransaction.replace(R.id.projectPage,multipleClassViewer);
+        ((LinearLayout)findViewById(R.id.projectPageLayout)).setVisibility(View.INVISIBLE);
+        aTransaction.addToBackStack(null);
+        aTransaction.commit();
+        drawerLayout.closeDrawers();//Close the Sliding Menu
+
+    }
+
+
     /**
      *
      * This method is executed when the user clicks on the Select All button from the SlidingMenu.

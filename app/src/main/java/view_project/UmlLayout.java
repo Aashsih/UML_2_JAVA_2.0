@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.head_first.aashi.uml_2_java.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ import utils.ClassType;
  *This class represents a UML Class Diagram where the user can enter the class details as a Fragment.
  * This class is responsible for the storage and display of the UML Class diagram for one class.
  */
-public class UmlLayout extends Fragment {
+public class UmlLayout extends Fragment implements Serializable{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";

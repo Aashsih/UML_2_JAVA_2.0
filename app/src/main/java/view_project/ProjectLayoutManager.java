@@ -9,6 +9,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,8 @@ import uml_components.UML;
  * It stores both the UI components and the DataStructure Project and is used to communicate
  * for all creating, storing and editing option
  */
-public class ProjectLayoutManager {
+public class ProjectLayoutManager  implements Serializable {
+    public static final String PROJECT_LAYOUT_MANAGER_TAG = "PROJECT_LAYOUT_MANAGER_TAG";
     private int CLASS_ID;
 
     //Abstraction
@@ -107,7 +109,10 @@ public class ProjectLayoutManager {
 
         return this.templateLayouts.get(position);
     }
+    public final TemplateLayout setTemplateFragment(int position, TemplateLayout newTemplateLayout){
 
+        return this.templateLayouts.set(position, newTemplateLayout);
+    }
 
     public final boolean deleteUMLFragment(int position){
         return this.umlFragments.remove(position) != null;
