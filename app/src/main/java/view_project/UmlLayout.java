@@ -190,13 +190,24 @@ public class UmlLayout extends Fragment implements Serializable{
 //                    + " must implement OnFragmentInteractionListener");
 //        }
     }
+    @Override
+    public void onSaveInstanceState(Bundle bundle){
 
+    }
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
+    @Override
+    public void onDestroy() {
 
+        try {
+            super.onDestroy();
+        } catch (NullPointerException npe) {
+
+        }
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

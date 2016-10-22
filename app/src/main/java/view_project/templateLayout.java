@@ -145,6 +145,10 @@ public class TemplateLayout extends Fragment implements Serializable {
 
         return rootView;
     }
+    @Override
+    public void onSaveInstanceState(Bundle bundle){
+
+    }
     private final void resizeFragment(){
         if(matchParent){
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -207,7 +211,15 @@ public class TemplateLayout extends Fragment implements Serializable {
         super.onDetach();
         mListener = null;
     }
+    @Override
+    public void onDestroy() {
 
+        try {
+            super.onDestroy();
+        } catch (NullPointerException npe) {
+
+        }
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

@@ -77,6 +77,8 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
     public void onBackPressed()
     {
         super.onBackPressed();
+        //removeChildFragments();
+        removeTemplateLayoutFragments();
         ((LinearLayout)findViewById(R.id.projectPageLayout)).setVisibility(View.VISIBLE);
     }
 
@@ -221,20 +223,24 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
     private final void removeChildFragments(){
         if(multipleClassViewer != null){
             FragmentManager childFragmentManager = multipleClassViewer.getChildFragmentManager();
-            if(childFragmentManager.popBackStackImmediate()){
+
+            if(childFragmentManager.getBackStackEntryCount() > 0){
                 childFragmentManager.popBackStackImmediate(null, childFragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
             List<Fragment> fragments = childFragmentManager.getFragments();
             if(fragments != null){
                 FragmentTransaction aTransaction = childFragmentManager.beginTransaction();
                 for(Fragment aFragment : fragments){
-                    if(aFragment != null)
+                    if(aFragment != null){
                         aTransaction.remove(aFragment);
+                    }
+
                 }
                 aTransaction.commit();
 
             }
-            childFragmentManager.executePendingTransactions();
+            //childFragmentManager.executePendingTransactions();
+
             multipleClassViewer = null;
         }
     }
@@ -273,15 +279,17 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
     }
     private final void removeTemplateLayoutFragments(){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if(fragmentManager.popBackStackImmediate()){
+        if(fragmentManager.getBackStackEntryCount() > 0){
             fragmentManager.popBackStackImmediate(null, fragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
         List<Fragment> fragments = fragmentManager.getFragments();
         if(fragments != null){
             FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
             for(Fragment aFragment : fragments){
-                if(aFragment != null)
+                if(aFragment != null){
                     aTransaction.remove(aFragment);
+                }
+
             }
             aTransaction.commit();
 
@@ -422,11 +430,11 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
 
         for(int i = 0; i < umlList.size(); i++){
             try {
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(umlList.get(i).getClassName()+".java", Context.MODE_PRIVATE));
-                outputStreamWriter.write(projectCode.get(i).toString());
-                outputStreamWriter.close();
-                 buffer += projectCode.get(i).toString();
-                    buffer+="\n\n";
+//                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(umlList.get(i).getClassName()+".java", Context.MODE_PRIVATE));
+//                outputStreamWriter.write(projectCode.get(i).toString());
+//                outputStreamWriter.close();
+                buffer += projectCode.get(i).toString();
+                buffer+="\n\n";
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -437,7 +445,7 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
         //The body of the File being shared (This will be the toString representation of each Class)
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, buffer);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
-        Toast.makeText(getApplicationContext(),"File Saved Successfully", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"File Saved Successfully", Toast.LENGTH_LONG).show();
 
 
     }
