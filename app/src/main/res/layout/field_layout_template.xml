@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/customborder">
+    android:background="@drawable/border">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -15,7 +16,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/fieldAccessModifierTemplate"
             android:padding="5dp"
-            android:layout_weight="0.35"
+            android:layout_weight="0.17"
             android:layout_gravity="center_vertical" />
         <HorizontalScrollView
             android:layout_width="0dp"
@@ -45,7 +46,7 @@
             android:id="@+id/textViewTemplate"
             android:layout_gravity="center_vertical"
             android:padding="5dp"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.08" />
         <HorizontalScrollView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -59,7 +60,7 @@
                 android:id="@+id/dataTypeTemplate"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:layout_weight="1" />
 
         </HorizontalScrollView>

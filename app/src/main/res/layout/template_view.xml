@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/border"
     android:id="@+id/template_layout">
 
     <LinearLayout
@@ -29,11 +30,10 @@
         <TextView
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="42dp"
+            android:layout_height="wrap_content"
             android:text="@string/classType"
             android:id="@+id/classTypeTemplate"
             android:layout_gravity="center_horizontal"
-            android:textSize="10sp"
             android:textAlignment="center" />
 
     </LinearLayout>
@@ -54,12 +54,14 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:id="@+id/UML_LayoutTemplate">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/fieldLinearLayout">
 
 
                 <LinearLayout
@@ -72,11 +74,19 @@
 
             </LinearLayout>
 
+            <TextView
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:id="@+id/separatorLine" />
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/MethodsTemplate">
+
+                android:id="@+id/methodLinearLayout">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -93,14 +103,6 @@
 
     </ScrollView>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:weightSum="1">
 
-
-    </LinearLayout>
 
 </LinearLayout>

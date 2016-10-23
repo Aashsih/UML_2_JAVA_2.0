@@ -8,15 +8,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.head_first.aashi.uml_2_java.R;
 
@@ -24,15 +18,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import project.IProject;
-import uml_components.Field;
 import uml_components.IMethod;
 import uml_components.IUML;
 import uml_components.IVariable;
-import uml_components.Method;
-import uml_components.UML;
-import utils.AccessModifier;
-import utils.ClassType;
 
 /**
  * Created by Aman on 19/10/2016.
@@ -42,9 +30,12 @@ public class TemplateLayout extends Fragment implements Serializable {
     public static final String TEMPLATE_LAYOUT_TAG = "TEMPLATE_LAYOUT_TAG";
     public static final String MATCH_PARENT = "TEMPLATE_LAYOUT_TAG";
 
-    private static final int CHILD_FRAGMENT_WIDTH = 400;
-    private static final int CHILD_FRAGMENT_HEIGHT = 400;
+    private static final int CHILD_FRAGMENT_WIDTH = 550;
+    private static final int CHILD_FRAGMENT_HEIGHT_MIN = 250;
+    private static final int CHILD_FRAGMENT_HEIGHT_MAX = 1000;
+    private static final int HEIGHT_INCREMENT = 200;
 
+    private int childFragmentHeight;
 
     //For on TouchListener
     private ViewGroup rootViewGroup;
@@ -142,7 +133,9 @@ public class TemplateLayout extends Fragment implements Serializable {
             methods.addView(methodLayout);
 
         }
-
+        if(fieldLayouts.isEmpty() && methodLayouts.isEmpty()){
+            ((TextView)(rootView.findViewById(R.id.separatorLine))).setVisibility(View.INVISIBLE);
+        }
         return rootView;
     }
     @Override
@@ -157,7 +150,11 @@ public class TemplateLayout extends Fragment implements Serializable {
 
         }
         else{
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(CHILD_FRAGMENT_WIDTH, CHILD_FRAGMENT_HEIGHT);
+
+            if((childFragmentHeight = CHILD_FRAGMENT_HEIGHT_MIN + HEIGHT_INCREMENT * (uml.getVariableList().size() + uml.getMethodList().size())) > CHILD_FRAGMENT_HEIGHT_MAX){
+                childFragmentHeight = CHILD_FRAGMENT_HEIGHT_MAX;
+            }
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(CHILD_FRAGMENT_WIDTH, childFragmentHeight);
             rootView.setLayoutParams(layoutParams);
             rootView.requestLayout();
             rootView.setOnTouchListener(new TemplateTouchListener());
