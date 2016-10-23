@@ -114,6 +114,13 @@ public class ProjectLayoutManager  implements Serializable {
         return this.templateLayouts.set(position, newTemplateLayout);
     }
 
+    /**
+     * The method is used to delete a UmlLayout Fragment stored in the
+     * umlFragments List.
+     * @param position - specifies the index of the UmlLayout Fragment to be deleted from the List
+     * @return -true if the fragment was deleted successfully
+     *         -false otherwise
+     */
     public final boolean deleteUMLFragment(int position){
         return this.umlFragments.remove(position) != null;
     }

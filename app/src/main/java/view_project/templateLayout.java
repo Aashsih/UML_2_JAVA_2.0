@@ -24,20 +24,24 @@ import uml_components.IVariable;
 
 /**
  * Created by Aman on 19/10/2016.
+ *
+ * This Fragment is used to view the UML diagram created by the user.
  */
 
 public class TemplateLayout extends Fragment implements Serializable {
     public static final String TEMPLATE_LAYOUT_TAG = "TEMPLATE_LAYOUT_TAG";
     public static final String MATCH_PARENT = "TEMPLATE_LAYOUT_TAG";
 
+    //Constants to resize the Width and Height of the Fragment
     private static final int CHILD_FRAGMENT_WIDTH = 550;
     private static final int CHILD_FRAGMENT_HEIGHT_MIN = 250;
     private static final int CHILD_FRAGMENT_HEIGHT_MAX = 1000;
     private static final int HEIGHT_INCREMENT = 200;
 
+    //Height of the Fragment after resize
     private int childFragmentHeight;
 
-    //For on TouchListener
+    //Variables for on TouchListener
     private ViewGroup rootViewGroup;
     private int xDelta;
     private int yDelta;
@@ -49,8 +53,6 @@ public class TemplateLayout extends Fragment implements Serializable {
     private List<FieldLayoutTemplate> fieldLayouts;
     //List of Methods in a class
     private List<MethodLayoutTemplate> methodLayouts;
-
-//------------------------------------------------------------------------------------------------------------------------------
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -103,36 +105,38 @@ public class TemplateLayout extends Fragment implements Serializable {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.template_view, container, false);
         rootViewGroup = (ViewGroup) rootView.findViewById(R.id.template_layout);
+        //if arguments were bundled and passed to the Fragment
         if(getArguments() != null){
             matchParent = (boolean) getArguments().getSerializable(TemplateLayout.TEMPLATE_LAYOUT_TAG);
             resizeFragment();
         }
 
         TextView classType = (TextView)rootView.findViewById(R.id.classTypeTemplate);
-
         classType.setText(uml.getClassType().toString());
 
         TextView className = (TextView)rootView.findViewById(R.id.classNameTemplate);
-
         className.setText(uml.getClassName());
-
+        //Populate the fields dynamically
         for(IVariable aField : uml.getVariableList()){
 
             LinearLayout fields = (LinearLayout) rootView.findViewById(R.id.fieldsTemplate);
+            //Inflate the field layout
             View fieldLayout = getActivity().getLayoutInflater().inflate(R.layout.field_layout_template, null);
             addFieldLayout(fieldLayout, aField);
             fields.addView(fieldLayout);
 
         }
-
+        //Populate the methods dynamically
         for(IMethod aMethod : uml.getMethodList()){
 
             LinearLayout methods = (LinearLayout) rootView.findViewById(R.id.methodsTemplate);
+            //Inflate the method layout
             View methodLayout = getActivity().getLayoutInflater().inflate(R.layout.method_layout_template, null);
             intialiseMethodLayout(methodLayout, aMethod);
             methods.addView(methodLayout);
 
         }
+        //if no fields and methods have been created, then do not display the separator line between them
         if(fieldLayouts.isEmpty() && methodLayouts.isEmpty()){
             ((TextView)(rootView.findViewById(R.id.separatorLine))).setVisibility(View.INVISIBLE);
         }
@@ -141,55 +145,6 @@ public class TemplateLayout extends Fragment implements Serializable {
     @Override
     public void onSaveInstanceState(Bundle bundle){
 
-    }
-    private final void resizeFragment(){
-        if(matchParent){
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            rootView.setLayoutParams(layoutParams);
-            rootView.requestLayout();
-
-        }
-        else{
-
-            if((childFragmentHeight = CHILD_FRAGMENT_HEIGHT_MIN + HEIGHT_INCREMENT * (uml.getVariableList().size() + uml.getMethodList().size())) > CHILD_FRAGMENT_HEIGHT_MAX){
-                childFragmentHeight = CHILD_FRAGMENT_HEIGHT_MAX;
-            }
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(CHILD_FRAGMENT_WIDTH, childFragmentHeight);
-            rootView.setLayoutParams(layoutParams);
-            rootView.requestLayout();
-            rootView.setOnTouchListener(new TemplateTouchListener());
-        }
-    }
-    private void addFieldLayout(View fieldLayout, IVariable aField){
-        TextView fieldAccessModifier = (TextView)fieldLayout.findViewById(R.id.fieldAccessModifierTemplate);
-        fieldAccessModifier.setText(aField.getAccessModifier().getSymbol());
-
-        TextView fieldName = (TextView)fieldLayout.findViewById(R.id.varNameTemplate);
-        fieldName.setText(aField.getVarName());
-
-        TextView dataType = (TextView)fieldLayout.findViewById(R.id.dataTypeTemplate);;
-        dataType.setText(aField.getType());
-
-        FieldLayoutTemplate fieldLayoutTemplate = new FieldLayoutTemplate(fieldAccessModifier,fieldName,dataType);
-        fieldLayouts.add(fieldLayoutTemplate);
-    }
-
-    private void intialiseMethodLayout(View method, IMethod aMethod){
-
-        TextView methodAccessModifier = (TextView)method.findViewById(R.id.methodAccessModifierTemplate);
-        methodAccessModifier.setText(aMethod.getAccessModifier().getSymbol());
-
-        TextView methodName = (TextView) method.findViewById(R.id.methodNameTemplate);
-        methodName.setText(aMethod.getMethodName());
-
-        TextView parameters = (TextView) method.findViewById(R.id.parametersTemplate);
-        parameters.setText(aMethod.getParameters());
-
-        TextView returnType = (TextView) method.findViewById(R.id.returnTypeTemplate);
-        returnType.setText(aMethod.getReturnType());
-
-        MethodLayoutTemplate methodLayout = new MethodLayoutTemplate(methodAccessModifier, methodName, parameters, returnType);
-        methodLayouts.add(methodLayout);
     }
 
     @Override
@@ -218,6 +173,73 @@ public class TemplateLayout extends Fragment implements Serializable {
         }
     }
     /**
+     * This method is used to resize the fragment depending on matchParent attribute
+     */
+    private final void resizeFragment(){
+        //if the Fragment's layout should match parent
+        if(matchParent){
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            rootView.setLayoutParams(layoutParams);
+            rootView.requestLayout();
+
+        }
+        else{
+            //calculate the height of the fragment depending on the number of fields and methods it has
+            if((childFragmentHeight = CHILD_FRAGMENT_HEIGHT_MIN + HEIGHT_INCREMENT * (uml.getVariableList().size() + uml.getMethodList().size())) > CHILD_FRAGMENT_HEIGHT_MAX){
+                //if the calculated height exceeds the MAX limit
+                childFragmentHeight = CHILD_FRAGMENT_HEIGHT_MAX;
+            }
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(CHILD_FRAGMENT_WIDTH, childFragmentHeight);
+            rootView.setLayoutParams(layoutParams);
+            rootView.requestLayout();
+            rootView.setOnTouchListener(new TemplateTouchListener());
+        }
+    }
+
+    /**
+     * This method is used to add a field Layout to the TemplateLayout Fragment
+     *
+     * @param fieldLayout -the View that needs to be poulated with data
+     * @param aField - Data that this field contains
+     */
+    private void addFieldLayout(View fieldLayout, IVariable aField){
+        TextView fieldAccessModifier = (TextView)fieldLayout.findViewById(R.id.fieldAccessModifierTemplate);
+        fieldAccessModifier.setText(aField.getAccessModifier().getSymbol());
+
+        TextView fieldName = (TextView)fieldLayout.findViewById(R.id.varNameTemplate);
+        fieldName.setText(aField.getVarName());
+
+        TextView dataType = (TextView)fieldLayout.findViewById(R.id.dataTypeTemplate);;
+        dataType.setText(aField.getType());
+
+        FieldLayoutTemplate fieldLayoutTemplate = new FieldLayoutTemplate(fieldAccessModifier,fieldName,dataType);
+        fieldLayouts.add(fieldLayoutTemplate);
+    }
+
+    /**
+     *
+     * @param method -the View that needs to be poulated with data
+     * @param aMethod - Data that this method contains
+     */
+    private void intialiseMethodLayout(View method, IMethod aMethod){
+
+        TextView methodAccessModifier = (TextView)method.findViewById(R.id.methodAccessModifierTemplate);
+        methodAccessModifier.setText(aMethod.getAccessModifier().getSymbol());
+
+        TextView methodName = (TextView) method.findViewById(R.id.methodNameTemplate);
+        methodName.setText(aMethod.getMethodName());
+
+        TextView parameters = (TextView) method.findViewById(R.id.parametersTemplate);
+        parameters.setText(aMethod.getParameters());
+
+        TextView returnType = (TextView) method.findViewById(R.id.returnTypeTemplate);
+        returnType.setText(aMethod.getReturnType());
+
+        MethodLayoutTemplate methodLayout = new MethodLayoutTemplate(methodAccessModifier, methodName, parameters, returnType);
+        methodLayouts.add(methodLayout);
+    }
+
+    /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
@@ -239,6 +261,10 @@ public class TemplateLayout extends Fragment implements Serializable {
     public View getRootView(){
         return rootView;
     }
+
+    /**
+     * This class contains all Views used to make the FieldLayout in field_layout_template.xml
+     */
     private class FieldLayoutTemplate{
 
         private TextView fieldAccessModifier;
@@ -277,7 +303,9 @@ public class TemplateLayout extends Fragment implements Serializable {
         }
 
     }
-
+    /**
+     * This class contains all Views used to make the MethodLayout in method_layout_template.xml
+     */
     private class MethodLayoutTemplate {
 
         private TextView methodAccessModifier;

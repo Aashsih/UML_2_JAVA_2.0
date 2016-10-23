@@ -377,6 +377,140 @@ public class UmlLayout extends Fragment implements Serializable{
 
         return methodLayouts;
     }
+    /**
+     * Created by Aashish Indorewala on 23-Sep-16.
+     *
+     * This class contains all Views used to make the FieldLayout in field_layout.xml
+     */
+    private final class FieldLayout {
+        //
+        private Spinner fieldAccessModifier;
+        private EditText fieldName;
+        private EditText dataType;
+        private CheckBox isFinal;
+        private CheckBox isStatic;
+
+        public FieldLayout(Spinner fieldAccessModifier, EditText fieldName, EditText dataType, CheckBox isFinal, CheckBox isStatic){
+            this.fieldAccessModifier = fieldAccessModifier;
+            this.fieldName = fieldName;
+            this.dataType = dataType;
+            this.isFinal = isFinal;
+            this.isStatic = isStatic;
+        }
+
+        //Getters and Setters
+        public Spinner getFieldAccessModifier() {
+            return fieldAccessModifier;
+        }
+
+        public void setFieldAccessModifier(Spinner fieldAccessModifier) {
+            this.fieldAccessModifier = fieldAccessModifier;
+        }
+
+        public EditText getFieldName() {
+            return fieldName;
+        }
+
+        public void setFieldName(EditText fieldName) {
+            this.fieldName = fieldName;
+        }
+
+        public EditText getDataType() {
+            return dataType;
+        }
+
+        public void setDataType(EditText dataType) {
+            this.dataType = dataType;
+        }
+
+        public CheckBox getIsFinal() {
+            return isFinal;
+        }
+
+        public void setIsFinal(CheckBox isFinal) {
+            this.isFinal = isFinal;
+        }
+
+        public CheckBox getIsStatic() {
+            return isStatic;
+        }
+
+        public void setIsStatic(CheckBox isStatic) {
+            this.isStatic = isStatic;
+        }
+    }
+    /**
+     * Created by Aashish Indorewala on 23-Sep-16.
+     *
+     * This class contains all Views used to make the MethodLayout in method_layout.xml
+     */
+    private final class MethodLayout {
+
+        private Spinner methodAccessModifier;
+        private EditText methodName;
+        private EditText parameters;
+        private EditText returnType;
+        private CheckBox isFinal;
+        private CheckBox isStatic;
+
+        public MethodLayout(Spinner methodAccessModifier, EditText methodName,EditText paramters, EditText returnType, CheckBox isFInal, CheckBox isStatic){
+            this.methodAccessModifier = methodAccessModifier;
+            this.methodName = methodName;
+            this.parameters = paramters;
+            this.returnType = returnType;
+            this.isFinal = isFInal;
+            this.isStatic = isStatic;
+        }
+
+        //Getters and Setters
+        public Spinner getMethodAccessModifier() {
+            return methodAccessModifier;
+        }
+
+        public void setMethodAccessModifier(Spinner methodAccessModifier) {
+            this.methodAccessModifier = methodAccessModifier;
+        }
+
+        public EditText getMethodName() {
+            return methodName;
+        }
+
+        public void setMethodName(EditText methodName) {
+            this.methodName = methodName;
+        }
+
+        public EditText getParameters() {
+            return parameters;
+        }
+
+        public void setParameters(EditText parameters) {
+            this.parameters = parameters;
+        }
+
+        public EditText getReturnType() {
+            return returnType;
+        }
+
+        public void setReturnType(EditText returnType) {
+            this.returnType = returnType;
+        }
+
+        public CheckBox getIsFinal() {
+            return isFinal;
+        }
+
+        public void setIsFinal(CheckBox isFinal) {
+            this.isFinal = isFinal;
+        }
+
+        public CheckBox getIsStatic() {
+            return isStatic;
+        }
+
+        public void setIsStatic(CheckBox isStatic) {
+            this.isStatic = isStatic;
+        }
+    }
 
 
 }

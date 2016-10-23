@@ -33,18 +33,25 @@ import uml_to_java.ConvertToJava;
 /**
  * This class contains the Project Activity.
  * This Activity (DrawerLayout) will start of to be empty if a new Project is created or
- * will be populated with the stored work of the user
+ * will be populated with the stored work of the user. This is the ativity the user primarily interacts
+ * with while creating their project.
  *
- * Note: This sprint is only limited to saving the user's work
+ * This class has a drawer layout and all classes in the Project are managed in the sliding menu
+ * where as project specific options are in the main layout of the drawer layout.
+ *
+
  */
 public class ProjectViewer extends AppCompatActivity implements  Serializable{
 
     //Communicates between the UI components and the Project
     private ProjectLayoutManager projectManager = new ProjectLayoutManager();
+    //Fragment to view multiple classes together
     private MultipleClassViewer multipleClassViewer = null;
-    private boolean fileSaved;
+    //Activity specific elements
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerListener;
+
+    private boolean fileSaved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,17 +88,6 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
         removeTemplateLayoutFragments();
         ((LinearLayout)findViewById(R.id.projectPageLayout)).setVisibility(View.VISIBLE);
     }
-
-//    private final Fragment getActiveFragment(){
-//        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-//        if(fragments != null){
-//            for(Fragment fragment : fragments){
-//                if(fragment != null && fragment.isVisible())
-//                    return fragment;
-//            }
-//        }
-//        return null;
-//    }
 
     /**
      *  Helper Method
@@ -152,7 +148,7 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
     }
 
     /**
-     * This method is called when the View button from the Sliding Menu is clicked.
+     * This method is called when the Edit button from the Sliding Menu is clicked.
      *
      */
     public void editClass(View view){
@@ -163,18 +159,23 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
             case 0: break; //If no classes are selected
             case 1: //If one class is selected, allow the user to editClass the class (UmlLayout Fragment)
             {
-
                 editSingleClass(selectedClasses);
                 break;
             }
             default:
             {
-                //this is where multiple classes will be viewed together
+                //Features if added in the future can be implemented here
                 
             }
         }
     }
 
+    /**
+     * This method Replaces the current viewable fragment if any with the UmlLayout Fragment
+     * so the user can edit it.
+     *
+     * @param selectedClasses -represents the list of classes that the user has selected to edit
+     */
     private final void editSingleClass(List<CheckBox> selectedClasses){
 
         //when only one class needs to be viewed
@@ -199,7 +200,10 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
         }
 
     }
-
+    /**
+     * This method is called when the View button from the Sliding Menu is clicked.
+     *
+     */
     public void viewClass(View view){
 
         List<CheckBox> selectedClasses = projectManager.getCheckedCheckBoxes();
@@ -220,30 +224,12 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
             }
         }
     }
-    private final void removeChildFragments(){
-        if(multipleClassViewer != null){
-            FragmentManager childFragmentManager = multipleClassViewer.getChildFragmentManager();
-
-            if(childFragmentManager.getBackStackEntryCount() > 0){
-                childFragmentManager.popBackStackImmediate(null, childFragmentManager.POP_BACK_STACK_INCLUSIVE);
-            }
-            List<Fragment> fragments = childFragmentManager.getFragments();
-            if(fragments != null){
-                FragmentTransaction aTransaction = childFragmentManager.beginTransaction();
-                for(Fragment aFragment : fragments){
-                    if(aFragment != null){
-                        aTransaction.remove(aFragment);
-                    }
-
-                }
-                aTransaction.commit();
-
-            }
-            //childFragmentManager.executePendingTransactions();
-
-            multipleClassViewer = null;
-        }
-    }
+    /**
+     * This method Replaces the current viewable fragment if any with the TemplateLayout Fragment
+     * so the user can view it.
+     *
+     * @param selectedClasses -represents the list of classes that the user has selected to edit
+     */
     private final void viewSingleClass(List<CheckBox> selectedClasses){
         removeChildFragments();
 
@@ -277,6 +263,66 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
         }
 
     }
+
+    /**
+     * This method Replaces the current viewable fragment if any with the MutilpleClassViewer Fragment
+     * so the user can view it.
+     *
+     * @param selectedClasses -represents the list of classes that the user has selected to edit
+     */
+    private final void viewMultipleClasses(List<CheckBox> selectedClasses) {
+
+        Bundle bundle = new Bundle();
+        //
+        bundle.putSerializable(ProjectLayoutManager.PROJECT_LAYOUT_MANAGER_TAG, (Serializable) this.projectManager);
+
+        multipleClassViewer = new MultipleClassViewer();
+        multipleClassViewer.setArguments(bundle);
+
+        removeTemplateLayoutFragments();
+        //Replace the old Fragment with the selected UmlLayout Fragment
+        FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
+        aTransaction.replace(R.id.projectPage,multipleClassViewer);
+        ((LinearLayout)findViewById(R.id.projectPageLayout)).setVisibility(View.INVISIBLE);
+        aTransaction.addToBackStack(null);
+        aTransaction.commit();
+        drawerLayout.closeDrawers();//Close the Sliding Menu
+
+    }
+
+    /**
+     * This methods removes the child fragments from the MutipleClassViewer Fragment so that
+     * they can be re-used with a different container Id.
+     */
+    private final void removeChildFragments(){
+        if(multipleClassViewer != null){
+            FragmentManager childFragmentManager = multipleClassViewer.getChildFragmentManager();
+            //If there is a fragment to remove
+            if(childFragmentManager.getBackStackEntryCount() > 0){
+                childFragmentManager.popBackStackImmediate(null, childFragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
+            List<Fragment> fragments = childFragmentManager.getFragments();
+            if(fragments != null){
+                FragmentTransaction aTransaction = childFragmentManager.beginTransaction();
+                for(Fragment aFragment : fragments){
+                    if(aFragment != null){
+                        aTransaction.remove(aFragment);
+                    }
+
+                }
+                aTransaction.commit();
+
+            }
+            //childFragmentManager.executePendingTransactions(); //might be needed later
+
+            multipleClassViewer = null;
+        }
+    }
+
+    /**
+     * This methods removes the fragments from the FragmentManager so that
+     * they can be re-used with a different container Id.
+     */
     private final void removeTemplateLayoutFragments(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         if(fragmentManager.getBackStackEntryCount() > 0){
@@ -294,27 +340,8 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
             aTransaction.commit();
 
         }
-        //fragmentManager.executePendingTransactions();
+        //fragmentManager.executePendingTransactions(); //might be needed later
     }
-    private final void viewMultipleClasses(List<CheckBox> selectedClasses) {
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(ProjectLayoutManager.PROJECT_LAYOUT_MANAGER_TAG, (Serializable) this.projectManager);
-
-        multipleClassViewer = new MultipleClassViewer();
-        multipleClassViewer.setArguments(bundle);
-
-        removeTemplateLayoutFragments();
-        //Replace the old Fragment with the selected UmlLayout Fragment
-        FragmentTransaction aTransaction = getSupportFragmentManager().beginTransaction();
-        aTransaction.replace(R.id.projectPage,multipleClassViewer);
-        ((LinearLayout)findViewById(R.id.projectPageLayout)).setVisibility(View.INVISIBLE);
-        aTransaction.addToBackStack(null);
-        aTransaction.commit();
-        drawerLayout.closeDrawers();//Close the Sliding Menu
-
-    }
-
 
     /**
      *
@@ -450,6 +477,10 @@ public class ProjectViewer extends AppCompatActivity implements  Serializable{
 
     }
 
+    /**
+     * This method deletes the classes selected by the user
+     *
+     */
     public void deleteSelectedClasses(View view){
         List<CheckBox> selectedClasses = this.projectManager.getCheckedCheckBoxes();
         if(selectedClasses.size() == 0){
